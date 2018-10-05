@@ -48,10 +48,16 @@ public class Controller {
 	public void start() {
 		Scanner	scanner = new Scanner(System.in);
 		System.out.print("Please enter your login name: ");
-		setLoginName(scanner.next());
+		
+		//setLoginName(scanner.next());
+		//TODO: set login name with Service layer
+		
 		System.out.println();
 		System.out.print("Please enter your password: ");
-		setLoginPassword(scanner.next());
+		
+		//setLoginPassword(scanner.next());
+		//TODO: set password with Service layer
+		
 		System.out.println();
 		scanner.close();
 		
@@ -63,16 +69,15 @@ public class Controller {
 			hashedPass.append("*");
 		}
 		
+		//TODO: Validate user input by searching against database
+		
 		System.out.println("Your login name is: " + getLoginName());
 		System.out.println("Your password is: " + hashedPass.toString());
 	}
 
-	
-	//Get Data from User by calling Service???
 
 	//Present Data to the User
 
-	//Validate user input
 
 
 
