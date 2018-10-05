@@ -30,14 +30,17 @@ public class Account implements Comparable<Account>, Serializable {
 	private double accountBalance;
 	
 	
+	private Customer customer;
+	
 	public Account() {}
 
-	public Account(Long accountNumber, String accountType, String accountStatus, double accountBalance) {
-		super();
+	public Account(Long accountNumber, String accountType, String accountStatus, double accountBalance, Customer customer) {
+		
 		this.accountNumber = accountNumber;
 		this.accountType = accountType;
 		this.accountStatus = accountStatus;
 		this.accountBalance = accountBalance;
+		this.customer = customer;
 	}
 
 
@@ -45,47 +48,41 @@ public class Account implements Comparable<Account>, Serializable {
 		return accountNumber;
 	}
 
-
-
 	public void setAccountNumber(Long accountNumber) {
 		this.accountNumber = accountNumber;
 	}
 
-
-
 	public String getAccountType() {
 		return accountType;
 	}
-	
 
 	public void setAccountType(String accountType) {
 		this.accountType = accountType;
 	}
 
-
-
 	public String getAccountStatus() {
 		return accountStatus;
 	}
-
-
 
 	public void setAccountStatus(String accountStatus) {
 		this.accountStatus = accountStatus;
 	}
 
-
-
 	public double getAccountBalance() {
 		return accountBalance;
 	}
-
-
 
 	public void setAccountBalance(double accountBalance) {
 		this.accountBalance = accountBalance;
 	}
 
+	public Customer getCustomer() {
+		return customer;
+	}
+	
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
 
 	@Override
 	public int hashCode() {
