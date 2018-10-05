@@ -11,8 +11,16 @@ public class Main {
 
 	public static void main(String[] args) {
 		
+		/*
+		Menu
+		1. Login
+		2. Create New Account
+		3. Reset password		
+		*/
+		
 		Controller bankController = new Controller();
 		bankController.start();
+		
 
 	}
 }
