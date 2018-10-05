@@ -28,6 +28,11 @@ public class Customer implements Comparable<Customer>, Serializable {
 	 * C_EMAIL_ADDRESS - Can be null
 	 */
 	private String emailAddress;
+	
+	/**
+	 * C_LOGIN_NAME - Not nullable
+	 */
+	private String loginName;
 
 	/**
 	 * C_CUSTOMER_HASH - Can be null
