@@ -12,15 +12,7 @@ public class ConnectionUtil {
 
 	public static Connection getConnection() throws SQLException {
 		String url = "jdbc:oracle:thin:@localhost:1521:xe";
-		//RDS: "jdbc:oracle:thin:@RDS_LINK:1521:ORCL" 
-		//-> Replace RDS_LINK with instance address
-
-		/*
-		 * BOTH USER AND PASSWORD SHOULD BE ENVIRONMENT VARIABLES.
-		 * 
-		 * YOU CAN GET THEM WITH (for example): System.getenv("BAND_DB_PASSWORD")
-		 */
-		String user = "BAND_DB";
+		String user = "BANK_DB";
 		String password = "p4ssw0rd";
 
 		return DriverManager.getConnection(url, user, password);
