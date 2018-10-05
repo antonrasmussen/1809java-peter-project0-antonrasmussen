@@ -12,6 +12,7 @@ public class Main {
 	public static void main(String[] args) {
 		
 		Controller bankController = new Controller();
+		bankController.start();
 
 	}
 }
