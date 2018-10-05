@@ -57,7 +57,7 @@ public interface BankRepository {
 	 * 
 	 * @return Set<Customer>
 	 */
-	Set<Customer> findAlCustomersl();
+	Set<Customer> findAllCustomers();
 	
 	/**
 	 * Returns an account based on its accountNumber 
@@ -82,6 +82,15 @@ public interface BankRepository {
 	Set<Account> findByAccountType(String accountType);
 	
 	//TODO: Add more methods here for various ways to search
+	
+	
+	/**
+	 * Returns customer(s) based on firstName and Last name
+	 * (Can contain duplicates)
+	 * @param String firstName, String lastName
+	 * @return Set<Customer>
+	 */	
+	Set<Customer> findByCustomerName(String firstName, String lastName);
 	
 	/**
 	 * We won't add update and delete because it's the same code as the insert.
