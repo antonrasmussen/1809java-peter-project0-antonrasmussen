@@ -35,11 +35,6 @@ public class Customer implements Comparable<Customer>, Serializable {
 	private String loginName;
 
 
-	//	/**
-	//	 * A_ACCOUNT_NUMBER (FK) - References A_ACCOUNT_NUMBER, nullable (e.g. customer has no accounts set up)
-	//	 */
-	//	private Long accountNumber;
-
 	/**
 	 * Account
 	 */
