@@ -4,17 +4,25 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 
+import com.revature.exception.BankRegistrationException;
 import com.revature.model.Account;
 import com.revature.model.Customer;
+import com.revature.repository.BankRepository;
+import com.revature.repository.BankRepositoryJdbc;
 
 public class BankServiceImpl implements BankService {
 	
 	private static Logger LOGGER = Logger.getLogger(BankService.class);
+	
+	private BankRepository repository = new BankRepositoryJdbc();
 
 	@Override
 	public boolean registerAccount(Account account) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean wasSuccessful = repository.insert(account);
+		if(!wasSuccessful) {
+			throw new BankRegistrationException("Invalid bank data");
+		}
+		return wasSuccessful;
 	}
 
 	@Override
