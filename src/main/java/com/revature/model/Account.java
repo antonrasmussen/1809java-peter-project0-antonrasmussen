@@ -38,6 +38,10 @@ public class Account implements Comparable<Account>, Serializable {
 	private Customer customer;
 
 	public Account() {}
+	
+	public Account(Long accountNumber) {
+		this.accountNumber = accountNumber;
+	}
 
 	public Account(Long accountNumber, 
 			String accountType, 
