@@ -52,7 +52,7 @@ public class Customer implements Comparable<Customer>, Serializable {
 		this.emailAddress = emailAddress;
 		this.loginName = loginName;
 		this.account = account;
-	}
+	} 
 	
 	public Customer(Long id) {
 		this.id = id;
