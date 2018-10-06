@@ -17,17 +17,77 @@ import com.revature.model.Customer;
 public interface BankService {
 	
 	// Account Stuff
+	
+	/**
+	 * Register a new account
+	 * 
+	 * @param account
+	 * @return if the count was registered successfully
+	 */
 	boolean registerAccount(Account account);
-	boolean registerAccountSecure(Account account);
+	
+	/**
+	 * Get a set of all the accounts in the Account Table
+	 * 
+	 * @return Set<Account>
+	 */
 	Set<Account> getAllAccounts();
-	Set<Account> getAccount(String accountType);
+	
+	/**
+	 * Get a set of accounts by account type
+	 * (Checking, Savings, or Custodial)
+	 * @param accountType
+	 * @return a set of accounts based on type
+	 */
+	Set<Account> getAccountsByType(String accountType);
+	
+	/**
+	 * Get a single account by account number
+	 * 
+	 * @param accountNumber
+	 * @return a single account
+	 */
 	Account getAccount(Long accountNumber);
 	
 	// Customer Stuff
+	
+	/**
+	 * Register a new customer
+	 * 
+	 * @param customer
+	 * @return if the customer was registered successfully
+	 */
 	boolean registerCustomer(Customer customer);
-	boolean registerCustomerSecure(Customer customer);
+	
+	/**
+	 * Get a set of all customers
+	 * 
+	 * @return all customers
+	 */
 	Set<Customer> getAllCustomers();
-	Set<Customer> getCustomer(String firstName, String lastName);
+	
+	/**
+	 * Get a set of customers with all the same account type
+	 * 
+	 * @param accountType
+	 * @return customers by account type
+	 */
+	Set<Customer> getCustomersByAccountType(Account accountType);
+	
+	/**
+	 * Get a set of customers with all the same account status
+	 * 
+	 * @param accountStatus
+	 * @return customers by account status
+	 */
+	Set<Customer> getCustomersByAccountStatus(Account accountStatus);
+	
+	/**
+	 * Get a customer by their customer id
+	 * 
+	 * @param id
+	 * @return a single customer
+	 */
 	Customer getCustomer(Long id);	
 
 }
