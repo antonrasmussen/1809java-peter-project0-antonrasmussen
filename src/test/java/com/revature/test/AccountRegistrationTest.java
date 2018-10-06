@@ -30,10 +30,10 @@ public class AccountRegistrationTest {
 		bankService = new BankServiceImpl();
 		testAccount = new Account(
 				null,
-				"CUSTODIAL", 
-				"INACTIVE", 
-				25.00, 
-				new Customer(2356L),
+				"SAVINGS", 
+				"ACTIVE", 
+				420.00, 
+				new Customer(421L),
 				null);
 
 		testAccountWrong = new Account(
