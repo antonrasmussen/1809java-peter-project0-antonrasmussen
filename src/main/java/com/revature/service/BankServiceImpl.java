@@ -15,68 +15,68 @@ public class BankServiceImpl implements BankService {
 	private static Logger LOGGER = Logger.getLogger(BankService.class);
 	
 	private BankRepository repository = new BankRepositoryJdbc();
+	
+	//Account methods
 
 	@Override
 	public boolean registerAccount(Account account) {
 		boolean wasSuccessful = repository.insert(account);
 		if(!wasSuccessful) {
-			throw new BankRegistrationException("Invalid bank data");
+			throw new BankRegistrationException("Invalid account");
 		}
 		return wasSuccessful;
 	}
 
 	@Override
-	public boolean registerAccountSecure(Account account) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public Set<Account> getAllAccounts() {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.findAllAccounts();
 	}
 
 	@Override
-	public Set<Account> getAccount(String accountType) {
-		// TODO Auto-generated method stub
-		return null;
+	public Set<Account> getAccountsByType(String accountType) {
+
+		return repository.findByAccountType(accountType);
 	}
 
 	@Override
 	public Account getAccount(Long accountNumber) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return repository.findByAccountNumber(accountNumber);
 	}
+	
+	//Customer methods
 
 	@Override
 	public boolean registerCustomer(Customer customer) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean wasSuccessful = repository.insert(customer);
+		if(!wasSuccessful) {
+			throw new BankRegistrationException("Invalid customer");
+		}
+		return wasSuccessful;
 	}
-
-	@Override
-	public boolean registerCustomerSecure(Customer customer) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 	@Override
 	public Set<Customer> getAllCustomers() {
+		
+		return repository.findAllCustomers();
+	}
+	
+	@Override
+	public Set<Customer> getCustomersByAccountType(Account accountType) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+
 	@Override
-	public Set<Customer> getCustomer(String firstName, String lastName) {
+	public Set<Customer> getCustomersByAccountStatus(Account accountStatus) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Customer getCustomer(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return repository.findByCustomerId(id);
 	}
 	
 	
