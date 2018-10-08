@@ -71,8 +71,7 @@ public class BankRepositoryJdbc implements BankRepository {
 						result.getString("A_ACCOUNT_STATUS"),
 						result.getDouble("A_ACCOUNT_BALANCE"),
 						new Customer(
-								result.getLong("C_ID")					
-								),
+								result.getLong("C_ID")),
 						result.getString("ACCOUNT_HASH")
 						));
 			}
@@ -107,7 +106,32 @@ public class BankRepositoryJdbc implements BankRepository {
 
 	@Override
 	public boolean insert(Customer customer) {
-		// TODO Auto-generated method stub
+		LOGGER.info("In bank repository");
+		try(Connection connection = ConnectionUtil.getConnection()){
+			int parameterIndex = 0;
+
+			String sql = "INSERT INTO CUSTOMER VALUES (NULL, ?, ?, ?, ?, ?, NULL)";
+
+			PreparedStatement statement = connection.prepareStatement(sql);
+			//-->customer id is NULL
+			statement.setString(++parameterIndex, customer.getFirstName());
+			statement.setString(++parameterIndex, customer.getLastName());
+			statement.setString(++parameterIndex, customer.getLoginName());
+			statement.setLong(++parameterIndex, customer.getAccount().getAccountNumber());
+			statement.setString(++parameterIndex, customer.getEmailAddress());
+			 // Chain to get PK
+			//-->customer hash is NULL
+
+			//returns int num of rows
+			if(statement.executeUpdate() > 0) {
+				LOGGER.info("statement.executeUpdate > 0");
+				return true;
+			}
+		} catch (SQLException e) {
+
+			LOGGER.error("Couldn't insert customer", e);
+		}
+
 		return false;
 	}
 
@@ -129,13 +153,11 @@ public class BankRepositoryJdbc implements BankRepository {
 			Set<Customer> customers = new HashSet<>();
 			while(result.next()) {
 				customers.add(new Customer(
-						result.getLong("C_ID"),
 						result.getString("C_FIRST_NAME"),
 						result.getString("C_LAST_NAME"),
-						result.getString("C_EMAIL_ADDRESS"),
 						result.getString("C_LOGIN_NAME"),
-						new Account(
-								result.getLong("A_ACCOUNT_NUMBER"))));
+						new Account(result.getLong("A_ACCOUNT_NUMBER")),
+						result.getString("C_EMAIL_ADDRESS")));
 			}
 
 			if(customers.size() == 0) {
@@ -161,14 +183,66 @@ public class BankRepositoryJdbc implements BankRepository {
 
 
 	@Override
-	public Set<Customer> findByCustomerName(String firstName, String lastName) {
+	public Set<Customer> findByName(String firstName, String lastName) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public Set<Customer> findByLoginName() {
+		try(Connection connection = ConnectionUtil.getConnection()) {
+			String sql = "SELECT C_LOGIN_NAME FROM CUSTOMER";
+			PreparedStatement statement = connection.prepareStatement(sql);
+			ResultSet result = statement.executeQuery();
+
+			//The Customer Set
+			Set<Customer> customer = new HashSet<>();
+			while(result.next()) {
+				customer.add(new Customer(
+						result.getString("C_LOGIN_NAME")));
+			}
+			
+			if(customer.size() == 0) {
+				
+				LOGGER.info("NOT a valid customer size");
+				return null;
+			}
+
+
+			return customer;
+		} catch (SQLException e) {
+
+			LOGGER.error("Couldn't retrieve login names", e);
+		}
+		return null;
+	}
+	
+	@Override
+	public boolean isValidLoginName(String loginName) {
+		LOGGER.info("In isValidLoginName");
+		boolean truthFlag = false;
+		Set<Customer> customer = new BankRepositoryJdbc().findByLoginName();
+		for(Customer cust: customer) {
+			
+			if(cust.getLoginName().equals(loginName)) {
+				LOGGER.info("VALID");
+				return true;
+			}
+			else {
+				LOGGER.info("INVALID");
+				truthFlag = false;
+			}
+		}
+
+		return truthFlag;
+	}
 
 	public static void main(String[] args) {
-		LOGGER.info(new BankRepositoryJdbc().findAllAccounts());
-		LOGGER.info(new BankRepositoryJdbc().findAllCustomers());
+		//LOGGER.info(new BankRepositoryJdbc().findAllAccounts());
+		//LOGGER.info(new BankRepositoryJdbc().findAllCustomers());
+		//LOGGER.info(new BankRepositoryJdbc().findByLoginName());
+
+
+		
 	}
 
 }

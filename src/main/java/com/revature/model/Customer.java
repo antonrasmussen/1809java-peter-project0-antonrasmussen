@@ -23,36 +23,65 @@ public class Customer implements Comparable<Customer>, Serializable {
 	 * C_LAST_NAME - Not nullable
 	 */
 	private String lastName;
-
-	/**
-	 * C_EMAIL_ADDRESS - Can be null
-	 */
-	private String emailAddress;
 	
 	/**
 	 * C_LOGIN_NAME - Not nullable
 	 */
 	private String loginName;
 
-
 	/**
 	 * Account
 	 */
 	private Account account;
+	
+	/*
+	 * 	CUSTOMER_HASH
+	 */
+	private String customerHash;
+
+
+	/**
+	 * C_EMAIL_ADDRESS - Can be null
+	 */
+	private String emailAddress;
+	
 
 	public Customer() {}
 
-
-	public Customer(Long id, String firstName, String lastName, String emailAddress, String loginName,
-			Account account) {
+	// With every field
+	public Customer(Long id, 
+			String firstName, 
+			String lastName, 
+			String loginName,
+			Account account, 
+			String emailAddress, 
+			String customerHash) {
 		
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.emailAddress = emailAddress;
 		this.loginName = loginName;
 		this.account = account;
+		this.emailAddress = emailAddress;	
+		this.customerHash = customerHash;
+
+	}
+	
+	// For findAllCustomers()
+	public Customer(String firstName, String lastName, String loginName,
+			Account account, String emailAddress) {
+		
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.loginName = loginName;
+		this.account = account;
+		this.emailAddress = emailAddress;	
+
 	} 
+	
+	public Customer(String loginName) {
+		this.loginName = loginName;
+	}
 	
 	public Customer(Long id) {
 		this.id = id;
@@ -82,15 +111,14 @@ public class Customer implements Comparable<Customer>, Serializable {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-
-	public String getEmailAddress() {
-		return emailAddress;
+	
+	public String getLoginName() {
+		return loginName;
 	}
 
-	public void setEmailAddress(String emailAddress) {
-		this.emailAddress = emailAddress;
+	public void setLoginName(String loginName) {
+		this.loginName = loginName;
 	}
-
 
 	public Account getAccount() {
 		return account;
@@ -100,13 +128,31 @@ public class Customer implements Comparable<Customer>, Serializable {
 		this.account = account;
 	}
 	
+	public String getEmailAddress() {
+		return emailAddress;
+	}
+
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
+	}
 	
+	public String getCustomerHash() {
+		return customerHash;
+	}
+
+	public void setCustomerHash(String customerHash) {
+		this.customerHash = customerHash;
+	}	
+
+	
+
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((account == null) ? 0 : account.hashCode());
+		result = prime * result + ((customerHash == null) ? 0 : customerHash.hashCode());
 		result = prime * result + ((emailAddress == null) ? 0 : emailAddress.hashCode());
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
@@ -115,13 +161,6 @@ public class Customer implements Comparable<Customer>, Serializable {
 		return result;
 	}
 
-	public String getLoginName() {
-		return loginName;
-	}
-
-	public void setLoginName(String loginName) {
-		this.loginName = loginName;
-	}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -136,6 +175,11 @@ public class Customer implements Comparable<Customer>, Serializable {
 			if (other.account != null)
 				return false;
 		} else if (!account.equals(other.account))
+			return false;
+		if (customerHash == null) {
+			if (other.customerHash != null)
+				return false;
+		} else if (!customerHash.equals(other.customerHash))
 			return false;
 		if (emailAddress == null) {
 			if (other.emailAddress != null)
@@ -164,14 +208,14 @@ public class Customer implements Comparable<Customer>, Serializable {
 			return false;
 		return true;
 	}
-	
-	
+
 
 	@Override
 	public String toString() {
-		return "Customer [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", emailAddress="
-				+ emailAddress + ", loginName=" + loginName + ", account=" + account + "]";
+		return "Customer [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", loginName=" + loginName
+				+ ", account=" + account + ", customerHash=" + customerHash + ", emailAddress=" + emailAddress + "]";
 	}
+
 
 	@Override
 	public int compareTo(Customer customer) {

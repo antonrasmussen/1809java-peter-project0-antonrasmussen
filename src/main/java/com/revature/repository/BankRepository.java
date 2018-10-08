@@ -91,10 +91,23 @@ public interface BankRepository {
 	 * @param String firstName, String lastName
 	 * @return Set<Customer>
 	 */	
-	Set<Customer> findByCustomerName(String firstName, String lastName);
+	Set<Customer> findByName(String firstName, String lastName);
+	
 	
 	/**
-	 * We won't add update and delete because it's the same code as the insert.
+	 * Returns a customer when given a login name
+	 *
+	 * @return A customer or an error
 	 */
+	Set<Customer> findByLoginName();
+	
+	/**
+	 * Checks to see if the provided login name exists in the database
+	 * @param loginName
+	 * @return true or false
+	 */
+	boolean isValidLoginName(String loginName);
+	
+	
 
 }

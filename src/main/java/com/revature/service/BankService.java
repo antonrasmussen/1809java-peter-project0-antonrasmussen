@@ -89,5 +89,12 @@ public interface BankService {
 	 * @return a single customer
 	 */
 	Customer getCustomer(Long id);	
+	
+	/**
+	 * Check to see if loginName is in database
+	 * @param loginName
+	 * @return true or false
+	 */
+	boolean bankHasLoginName(String loginName);
 
 }

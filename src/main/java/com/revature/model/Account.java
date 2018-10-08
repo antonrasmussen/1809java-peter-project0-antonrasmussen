@@ -42,6 +42,16 @@ public class Account implements Comparable<Account>, Serializable {
 	public Account(Long accountNumber) {
 		this.accountNumber = accountNumber;
 	}
+	 
+	public Account(Long accountNumber, 
+			String accountType, 
+			String accountStatus, 
+			double accountBalace) {
+		this.accountNumber = accountNumber;
+		this.accountType = accountType;
+		this.accountStatus = accountStatus;
+		this.accountBalance = accountBalance;
+	}
 
 	public Account(Long accountNumber, 
 			String accountType, 

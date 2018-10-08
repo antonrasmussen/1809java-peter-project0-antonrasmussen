@@ -5,6 +5,7 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 
 import com.revature.exception.BankRegistrationException;
+import com.revature.exception.CustomerLoginException;
 import com.revature.model.Account;
 import com.revature.model.Customer;
 import com.revature.repository.BankRepository;
@@ -20,6 +21,7 @@ public class BankServiceImpl implements BankService {
 
 	@Override
 	public boolean registerAccount(Account account) {
+		LOGGER.info("In register Account");
 		boolean wasSuccessful = repository.insert(account);
 		if(!wasSuccessful) {
 			throw new BankRegistrationException("Invalid account");
@@ -48,6 +50,7 @@ public class BankServiceImpl implements BankService {
 
 	@Override
 	public boolean registerCustomer(Customer customer) {
+		LOGGER.info("In register Customer");
 		boolean wasSuccessful = repository.insert(customer);
 		if(!wasSuccessful) {
 			throw new BankRegistrationException("Invalid customer");
@@ -77,6 +80,25 @@ public class BankServiceImpl implements BankService {
 	public Customer getCustomer(Long id) {
 		
 		return repository.findByCustomerId(id);
+	}
+	
+	public boolean bankHasLoginName(String loginName) {
+		LOGGER.info("In bankHasLoginName");
+		boolean wasSuccessful = repository.isValidLoginName(loginName);
+		if(!wasSuccessful){
+			
+			LOGGER.info("Not a valid login name... throwing exception....");
+			//throw new CustomerLoginException("Login Name Not Recognized.");
+		}
+		return wasSuccessful;
+		
+	}
+	
+	public static void main(String[] args) {
+		//LOGGER.info(new BankRepositoryJdbc().findAllAccounts());
+		//LOGGER.info(new BankRepositoryJdbc().findAllCustomers());
+		//LOGGER.info(new BankRepositoryJdbc().findByLoginName());		
+		//LOGGER.info(new BankRepositoryJdbc().isValidLoginName("TestLogin1"));
 	}
 	
 	
