@@ -1,6 +1,11 @@
 package com.revature.controller;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 
@@ -24,7 +29,7 @@ import com.revature.service.BankServiceImpl;
  */
 
 public class Controller {
-	
+
 	//TODO: Validate user input by searching against database
 
 	public static final Logger LOGGER = Logger.getLogger(Controller.class);
@@ -33,7 +38,7 @@ public class Controller {
 
 	public Customer customer = new Customer();
 	public Account account = new Account();
-	
+
 	Scanner	scanner = new Scanner(System.in);
 
 	public Controller() {}	
@@ -56,11 +61,11 @@ public class Controller {
 		System.out.println("| 2. Exit                  |");
 		System.out.println("============================");
 
-		
+
 		System.out.print("Select option: ");
 
 		int option = scanner.nextInt();
-		
+
 		switch (option) {
 		case 1:
 			//Login
@@ -81,7 +86,7 @@ public class Controller {
 	}
 
 	public void login() {
-		
+
 		System.out.print("Please enter your login name: ");
 
 		setLoginName(scanner.next());
@@ -105,12 +110,12 @@ public class Controller {
 		}
 
 	}
-	
+
 	//Present Data to a validated user
 	public void validatedMenu() {
 
 		String nm = getLoginName();
-		
+
 		System.out.println("============================");
 		System.out.println("    Welcome " + nm     + "! ");
 		System.out.println("============================");
@@ -123,13 +128,13 @@ public class Controller {
 		System.out.println("============================");
 
 		//LOGGER.info(bankService.getAccountBalance(getLoginId()));
-		
-		
+
+
 		System.out.print("Select option: ");
 
 		int option = scanner.nextInt();
-		
-		
+
+
 		switch (option) {
 		case 1:
 			//View Balance
@@ -146,7 +151,10 @@ public class Controller {
 		case 2:
 			//Withdraw Money
 			//> Get a list of accounts
+			getAccountNumber();
+
 			//> Choose which account to deposit to
+			//getSingleAccountBalanceByLoginNameAndAccountNumber(nm, accountNumber)
 			break;
 		case 3:
 			//Deposit Money
@@ -169,6 +177,45 @@ public class Controller {
 
 	}
 	
+	//TODO: Create an implementation of this that allows 
+	//each customer to have more than one account type!
+	public Long getAccountNumber() {
+
+		Long accountNumber = 0L;
+
+		Map<String, String> accountHolder = new LinkedHashMap<>();
+
+
+		System.out.println();
+		System.out.println("Your available accounts are: "); //+ bankService.getAllAccountNumbers(getLoginName()));
+
+
+		Set<Long> accNum = bankService.getAllAccountNumbers(getLoginName());
+		LOGGER.info(accNum);
+		Set<String> accType = bankService.getAllAccountTypes(getLoginName());	
+		LOGGER.info(accType);
+
+		Iterator<Long> it1 = accNum.iterator();
+		Iterator<String> it2 = accType.iterator();
+
+		while(it1.hasNext() && it2.hasNext()) {
+			accountHolder.put(it1.next().toString(),it2.next().toString());
+		}
+
+
+		System.out.println(accountHolder);
+
+
+
+		System.out.print("Please make an account selection: ");
+		//int option = scanner.nextInt();
+
+
+
+		//scanner.close();
+		return accountNumber;
+	}
+
 
 
 }

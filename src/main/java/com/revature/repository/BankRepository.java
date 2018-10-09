@@ -76,7 +76,9 @@ public interface BankRepository {
 	
 	double depositToAccount(Account accountNumber);
 	
-	Set<Long> getAccountNumbersByLoginName(String loginName);
+	Set<Long> findAccountNumbersByLoginName(String loginName);
+	
+	Set<String> findAccountTypesByLoginName(String loginName);
 	
 	public Account findByAccountNumber(String loginName, long accountNumber);
 	

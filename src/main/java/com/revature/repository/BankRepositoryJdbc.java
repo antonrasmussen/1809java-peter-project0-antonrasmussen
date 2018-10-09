@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
@@ -56,7 +57,7 @@ public class BankRepositoryJdbc implements BankRepository {
 			ResultSet result = statement.executeQuery();
 
 			//The Account Set
-			Set<Account> accounts = new HashSet<>();
+			Set<Account> accounts = new LinkedHashSet<>();
 			while(result.next()) {
 				accounts.add(new Account(
 						result.getLong("A_ACCOUNT_NUMBER"),
@@ -141,7 +142,7 @@ public class BankRepositoryJdbc implements BankRepository {
 			ResultSet result = statement.executeQuery();
 
 			//The Customer Set
-			Set<Customer> customers = new HashSet<>();
+			Set<Customer> customers = new LinkedHashSet<>();
 			while(result.next()) {
 				customers.add(new Customer(
 						result.getString("C_FIRST_NAME"),
@@ -262,7 +263,7 @@ public class BankRepositoryJdbc implements BankRepository {
 		return 0;
 	}
 
-	public Set<Long> getAccountNumbersByLoginName(String loginName) {
+	public Set<Long> findAccountNumbersByLoginName(String loginName) {
 		try(Connection connection = ConnectionUtil.getConnection()) {
 			String sql = "SELECT ACCOUNT.A_ACCOUNT_NUMBER "
 					+ "FROM ACCOUNT "
@@ -276,7 +277,7 @@ public class BankRepositoryJdbc implements BankRepository {
 			ResultSet result = statement.executeQuery();
 
 			//The Customer Set
-			Set<Long> accountNumbers = new HashSet<>();
+			Set<Long> accountNumbers = new LinkedHashSet<>();
 			while(result.next()) {
 				accountNumbers.add(result.getLong("A_ACCOUNT_NUMBER"));
 			}
@@ -295,7 +296,38 @@ public class BankRepositoryJdbc implements BankRepository {
 		return null;
 	}
 
+	public Set<String> findAccountTypesByLoginName(String loginName) {
+		try(Connection connection = ConnectionUtil.getConnection()) {
+			String sql = "SELECT ACCOUNT.A_ACCOUNT_TYPE "
+					+ "FROM ACCOUNT "
+					+ "INNER JOIN CUSTOMER "
+					+ "ON ACCOUNT.C_ID = CUSTOMER.C_ID "
+					+ "WHERE CUSTOMER.C_LOGIN_NAME = ?";
+			PreparedStatement statement = connection.prepareStatement(sql);
+			
+			statement.setString(1, loginName);
+			
+			ResultSet result = statement.executeQuery();
 
+			//The Customer Set
+			Set<String> accountTypes = new LinkedHashSet<>();
+			while(result.next()) {
+				accountTypes.add(result.getString("A_ACCOUNT_TYPE"));
+			}
+
+			if(accountTypes.size() == 0) {
+
+				LOGGER.info("No accounts to display");
+				return null;
+			}
+
+			return accountTypes;
+		} catch (SQLException e) {
+
+			LOGGER.error("Couldn't retrieve all account types", e);
+		}
+		return null;
+	}
 
 	//Deposit money: 
 	//> UPDATE ACCOUNT SET A_ACCOUNT_BALANCE = [Money to Deposit] where C_ID = [C_ID] and A_ACCOUNT_NUMBER = [A_ACCOUNT_NUMBER];
@@ -318,7 +350,7 @@ public class BankRepositoryJdbc implements BankRepository {
 			ResultSet result = statement.executeQuery();
 
 			//The Customer Set
-			Set<Customer> customer = new HashSet<>();
+			Set<Customer> customer = new LinkedHashSet<>();
 			while(result.next()) {
 				customer.add(new Customer(
 						result.getString("C_LOGIN_NAME")));
@@ -363,11 +395,11 @@ public class BankRepositoryJdbc implements BankRepository {
 	public static void main(String[] args) {
 		//LOGGER.info(new BankRepositoryJdbc().findAllAccounts());
 		//LOGGER.info(new BankRepositoryJdbc().findAllCustomers());
-		//LOGGER.info(new BankRepositoryJdbc().findByLoginName());
+		//LOGGER.info(new BankRepositoryJdbc().findByLoginName("anton"));
 		//LOGGER.info(new BankRepositoryJdbc().findBalanceByCustomerId(1L));
-		//LOGGER.info(new BankRepositoryJdbc().findBalanceByLoginName("anton"));
-		//LOGGER.info(new BankRepositoryJdbc().getAccountNumbersByLoginName("testlogin2"));
-		LOGGER.info(new BankRepositoryJdbc().findSingleBalanceByLoginNameAndAccountNumber("anton", 123456L) + 500); // Call within Withdraw/Deposit Functions
+		//LOGGER.info(new BankRepositoryJdbc().findTotalBalanceByLoginName("anton"));
+		LOGGER.info(new BankRepositoryJdbc().findAccountNumbersByLoginName("testlogin2")); // sorted
+		//LOGGER.info(new BankRepositoryJdbc().findSingleBalanceByLoginNameAndAccountNumber("anton", 123456L)); // Call within Withdraw/Deposit Functions
 
 
 

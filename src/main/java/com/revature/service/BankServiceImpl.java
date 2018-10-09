@@ -103,6 +103,21 @@ public class BankServiceImpl implements BankService {
 		return accountBalance;
 	}
 	
+	public double getSingleAccountBalanceByLoginNameAndAccountNumber(String loginName, Long accountNumber) {
+		double accountBalance = repository.findSingleBalanceByLoginNameAndAccountNumber(loginName, accountNumber);
+		
+		return accountBalance;
+	}
+	
+	public Set<Long> getAllAccountNumbers(String loginName) {
+		return repository.findAccountNumbersByLoginName(loginName);
+	}
+	
+	public Set<String> getAllAccountTypes(String loginName) {
+		return repository.findAccountTypesByLoginName(loginName);
+	}
+	
+	
 	public static void main(String[] args) {
 		//LOGGER.info(new BankRepositoryJdbc().findAllAccounts());
 		//LOGGER.info(new BankRepositoryJdbc().findAllCustomers());
