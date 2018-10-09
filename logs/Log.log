@@ -1960,3 +1960,120 @@ java.sql.SQLIntegrityConstraintViolationException: ORA-00001: unique constraint 
 	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:206)
 2018-10-08 23:41:57 INFO  BankService:24 - In register Account
 2018-10-08 23:42:48 INFO  BankService:24 - In register Account
+2018-10-09 06:55:53 ERROR ConnectionUtil:213 - Couldn't retrieve balance
+java.sql.SQLSyntaxErrorException: ORA-00904: "CUSTOMER"."TESTLOGIN1": invalid identifier
+
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:450)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:399)
+	at oracle.jdbc.driver.T4C8Oall.processError(T4C8Oall.java:1017)
+	at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:655)
+	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:249)
+	at oracle.jdbc.driver.T4C8Oall.doOALL(T4C8Oall.java:566)
+	at oracle.jdbc.driver.T4CPreparedStatement.doOall8(T4CPreparedStatement.java:215)
+	at oracle.jdbc.driver.T4CPreparedStatement.doOall8(T4CPreparedStatement.java:58)
+	at oracle.jdbc.driver.T4CPreparedStatement.executeForDescribe(T4CPreparedStatement.java:776)
+	at oracle.jdbc.driver.OracleStatement.executeMaybeDescribe(OracleStatement.java:897)
+	at oracle.jdbc.driver.OracleStatement.doExecuteWithTimeout(OracleStatement.java:1034)
+	at oracle.jdbc.driver.OraclePreparedStatement.executeInternal(OraclePreparedStatement.java:3820)
+	at oracle.jdbc.driver.OraclePreparedStatement.executeQuery(OraclePreparedStatement.java:3867)
+	at oracle.jdbc.driver.OraclePreparedStatementWrapper.executeQuery(OraclePreparedStatementWrapper.java:1502)
+	at com.revature.repository.BankRepositoryJdbc.findBalanceByLoginName(BankRepositoryJdbc.java:201)
+	at com.revature.repository.BankRepositoryJdbc.main(BankRepositoryJdbc.java:285)
+2018-10-09 06:55:53 INFO  ConnectionUtil:285 - 0.0
+2018-10-09 06:56:43 ERROR ConnectionUtil:213 - Couldn't retrieve balance
+java.sql.SQLSyntaxErrorException: ORA-00904: "CUSTOMER"."TESTLOGIN2": invalid identifier
+
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:450)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:399)
+	at oracle.jdbc.driver.T4C8Oall.processError(T4C8Oall.java:1017)
+	at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:655)
+	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:249)
+	at oracle.jdbc.driver.T4C8Oall.doOALL(T4C8Oall.java:566)
+	at oracle.jdbc.driver.T4CPreparedStatement.doOall8(T4CPreparedStatement.java:215)
+	at oracle.jdbc.driver.T4CPreparedStatement.doOall8(T4CPreparedStatement.java:58)
+	at oracle.jdbc.driver.T4CPreparedStatement.executeForDescribe(T4CPreparedStatement.java:776)
+	at oracle.jdbc.driver.OracleStatement.executeMaybeDescribe(OracleStatement.java:897)
+	at oracle.jdbc.driver.OracleStatement.doExecuteWithTimeout(OracleStatement.java:1034)
+	at oracle.jdbc.driver.OraclePreparedStatement.executeInternal(OraclePreparedStatement.java:3820)
+	at oracle.jdbc.driver.OraclePreparedStatement.executeQuery(OraclePreparedStatement.java:3867)
+	at oracle.jdbc.driver.OraclePreparedStatementWrapper.executeQuery(OraclePreparedStatementWrapper.java:1502)
+	at com.revature.repository.BankRepositoryJdbc.findBalanceByLoginName(BankRepositoryJdbc.java:201)
+	at com.revature.repository.BankRepositoryJdbc.main(BankRepositoryJdbc.java:285)
+2018-10-09 06:56:43 INFO  ConnectionUtil:285 - 0.0
+2018-10-09 07:04:20 INFO  ConnectionUtil:191 - In findBalanceByLogingName
+2018-10-09 07:04:20 ERROR ConnectionUtil:208 - Couldn't retrieve balance
+java.sql.SQLSyntaxErrorException: ORA-00904: "TESTLOGIN2": invalid identifier
+
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:450)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:399)
+	at oracle.jdbc.driver.T4C8Oall.processError(T4C8Oall.java:1017)
+	at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:655)
+	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:249)
+	at oracle.jdbc.driver.T4C8Oall.doOALL(T4C8Oall.java:566)
+	at oracle.jdbc.driver.T4CPreparedStatement.doOall8(T4CPreparedStatement.java:215)
+	at oracle.jdbc.driver.T4CPreparedStatement.doOall8(T4CPreparedStatement.java:58)
+	at oracle.jdbc.driver.T4CPreparedStatement.executeForDescribe(T4CPreparedStatement.java:776)
+	at oracle.jdbc.driver.OracleStatement.executeMaybeDescribe(OracleStatement.java:897)
+	at oracle.jdbc.driver.OracleStatement.doExecuteWithTimeout(OracleStatement.java:1034)
+	at oracle.jdbc.driver.OraclePreparedStatement.executeInternal(OraclePreparedStatement.java:3820)
+	at oracle.jdbc.driver.OraclePreparedStatement.executeQuery(OraclePreparedStatement.java:3867)
+	at oracle.jdbc.driver.OraclePreparedStatementWrapper.executeQuery(OraclePreparedStatementWrapper.java:1502)
+	at com.revature.repository.BankRepositoryJdbc.findBalanceByLoginName(BankRepositoryJdbc.java:196)
+	at com.revature.repository.BankRepositoryJdbc.main(BankRepositoryJdbc.java:280)
+2018-10-09 07:04:20 INFO  ConnectionUtil:280 - 0.0
+2018-10-09 07:11:11 INFO  ConnectionUtil:191 - In findBalanceByLogingName
+2018-10-09 07:11:11 ERROR ConnectionUtil:213 - Couldn't retrieve balance
+java.sql.SQLSyntaxErrorException: ORA-00904: "TESTLOGIN2": invalid identifier
+
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:450)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:399)
+	at oracle.jdbc.driver.T4C8Oall.processError(T4C8Oall.java:1017)
+	at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:655)
+	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:249)
+	at oracle.jdbc.driver.T4C8Oall.doOALL(T4C8Oall.java:566)
+	at oracle.jdbc.driver.T4CPreparedStatement.doOall8(T4CPreparedStatement.java:215)
+	at oracle.jdbc.driver.T4CPreparedStatement.doOall8(T4CPreparedStatement.java:58)
+	at oracle.jdbc.driver.T4CPreparedStatement.executeForDescribe(T4CPreparedStatement.java:776)
+	at oracle.jdbc.driver.OracleStatement.executeMaybeDescribe(OracleStatement.java:897)
+	at oracle.jdbc.driver.OracleStatement.doExecuteWithTimeout(OracleStatement.java:1034)
+	at oracle.jdbc.driver.OraclePreparedStatement.executeInternal(OraclePreparedStatement.java:3820)
+	at oracle.jdbc.driver.OraclePreparedStatement.executeQuery(OraclePreparedStatement.java:3867)
+	at oracle.jdbc.driver.OraclePreparedStatementWrapper.executeQuery(OraclePreparedStatementWrapper.java:1502)
+	at com.revature.repository.BankRepositoryJdbc.findBalanceByLoginName(BankRepositoryJdbc.java:201)
+	at com.revature.repository.BankRepositoryJdbc.main(BankRepositoryJdbc.java:285)
+2018-10-09 07:11:11 INFO  ConnectionUtil:285 - 0.0
+2018-10-09 07:12:14 INFO  ConnectionUtil:191 - In findBalanceByLogingName
+2018-10-09 07:12:14 ERROR ConnectionUtil:213 - Couldn't retrieve balance
+java.sql.SQLSyntaxErrorException: ORA-00904: "TESTLOGIN2": invalid identifier
+
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:450)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:399)
+	at oracle.jdbc.driver.T4C8Oall.processError(T4C8Oall.java:1017)
+	at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:655)
+	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:249)
+	at oracle.jdbc.driver.T4C8Oall.doOALL(T4C8Oall.java:566)
+	at oracle.jdbc.driver.T4CPreparedStatement.doOall8(T4CPreparedStatement.java:215)
+	at oracle.jdbc.driver.T4CPreparedStatement.doOall8(T4CPreparedStatement.java:58)
+	at oracle.jdbc.driver.T4CPreparedStatement.executeForDescribe(T4CPreparedStatement.java:776)
+	at oracle.jdbc.driver.OracleStatement.executeMaybeDescribe(OracleStatement.java:897)
+	at oracle.jdbc.driver.OracleStatement.doExecuteWithTimeout(OracleStatement.java:1034)
+	at oracle.jdbc.driver.OraclePreparedStatement.executeInternal(OraclePreparedStatement.java:3820)
+	at oracle.jdbc.driver.OraclePreparedStatement.executeQuery(OraclePreparedStatement.java:3867)
+	at oracle.jdbc.driver.OraclePreparedStatementWrapper.executeQuery(OraclePreparedStatementWrapper.java:1502)
+	at com.revature.repository.BankRepositoryJdbc.findBalanceByLoginName(BankRepositoryJdbc.java:201)
+	at com.revature.repository.BankRepositoryJdbc.main(BankRepositoryJdbc.java:285)
+2018-10-09 07:12:14 INFO  ConnectionUtil:285 - 0.0
+2018-10-09 07:17:44 INFO  ConnectionUtil:193 - In findBalanceByLogingName
+2018-10-09 07:17:44 INFO  ConnectionUtil:289 - 0.0
+2018-10-09 07:18:05 INFO  ConnectionUtil:193 - In findBalanceByLogingName
+2018-10-09 07:18:05 INFO  ConnectionUtil:289 - 4075.0
+2018-10-09 07:23:47 INFO  ConnectionUtil:193 - In findBalanceByLogingName
+2018-10-09 07:23:47 INFO  BankService:111 - 4075.0
+2018-10-09 07:25:03 INFO  BankService:81 - In bankHasLoginName
+2018-10-09 07:25:03 INFO  ConnectionUtil:259 - In isValidLoginName
+2018-10-09 07:25:04 INFO  ConnectionUtil:269 - INVALID
+2018-10-09 07:25:04 INFO  ConnectionUtil:265 - VALID
+2018-10-09 07:25:04 INFO  Controller:110 - In else of inValidSession
+2018-10-09 07:25:08 INFO  BankService:100 - In getAccountBalanceByLogin
+2018-10-09 07:25:08 INFO  ConnectionUtil:193 - In findBalanceByLogingName
+2018-10-09 07:25:08 INFO  Controller:148 - 4075.0

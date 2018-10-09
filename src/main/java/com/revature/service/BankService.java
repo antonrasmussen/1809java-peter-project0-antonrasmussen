@@ -98,6 +98,14 @@ public interface BankService {
 	 * @param customerId
 	 * @return double accountBalance (total across all accounts)
 	 */
-	public double getAccountBalance(Long customerId);
+	public double getAccountBalanceByCustomerId(Long customerId);
+	
+	/**
+	 * Get the account balance based on loginName; this
+	 * will be the sum of balances across all accounts for one loginName
+	 * @param loginName
+	 * @return double accountBalance (total across all accounts)
+	 */
+	public double getAccountBalanceByLoginName(String loginName);
 
 }

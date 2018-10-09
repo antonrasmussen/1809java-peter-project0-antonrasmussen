@@ -84,7 +84,7 @@ public interface BankRepository {
 	 *
 	 * @return A customer or an error
 	 */
-	Set<Customer> findByLoginName();
+	Set<Customer> findByLoginName(String loginName);
 	
 	/**
 	 * Checks to see if the provided login name exists in the database

@@ -168,6 +168,8 @@ public class BankRepositoryJdbc implements BankRepository {
 		try(Connection connection = ConnectionUtil.getConnection()) {
 			String sql = "SELECT A_ACCOUNT_BALANCE FROM ACCOUNT WHERE C_ID = " + id;
 			PreparedStatement statement = connection.prepareStatement(sql);
+			
+			
 			ResultSet result = statement.executeQuery();
 
 			//The Customer Set
@@ -188,16 +190,18 @@ public class BankRepositoryJdbc implements BankRepository {
 	@Override
 	public double findBalanceByLoginName(String loginName) {
 		try(Connection connection = ConnectionUtil.getConnection()) {
+			LOGGER.info("In findBalanceByLogingName");
 			
-			/////////////////////////////////////////////////////////////////////////
-			String sql = "select account.c_id, "
-					+ "account.a_account_number, "
-					+ "account.a_account_balance, "
-					+ "customer." + loginName
-					+ " from account "
-					+ "inner join customer "
-					+ "on account.c_id = customer.c_id";
+			String sql = "SELECT ACCOUNT.C_ID, "
+					+ "ACCOUNT.A_ACCOUNT_NUMBER, "
+					+ "ACCOUNT.A_ACCOUNT_BALANCE, "
+					+ "CUSTOMER.C_LOGIN_NAME "
+					+ "FROM ACCOUNT INNER JOIN CUSTOMER "
+					+ "ON ACCOUNT.C_ID = CUSTOMER.C_ID WHERE "
+					+ "CUSTOMER.C_LOGIN_NAME = ?";
 			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setString(1, loginName);
+			
 			ResultSet result = statement.executeQuery();
 
 			//The Customer Set
@@ -222,7 +226,7 @@ public class BankRepositoryJdbc implements BankRepository {
 		return null;
 	}
 	
-	public Set<Customer> findByLoginName() {
+	public Set<Customer> findByLoginName(String loginName) {
 		try(Connection connection = ConnectionUtil.getConnection()) {
 			String sql = "SELECT C_LOGIN_NAME FROM CUSTOMER";
 			PreparedStatement statement = connection.prepareStatement(sql);
@@ -254,7 +258,7 @@ public class BankRepositoryJdbc implements BankRepository {
 	public boolean isValidLoginName(String loginName) {
 		LOGGER.info("In isValidLoginName");
 		boolean truthFlag = false;
-		Set<Customer> customer = new BankRepositoryJdbc().findByLoginName();
+		Set<Customer> customer = new BankRepositoryJdbc().findByLoginName(loginName);
 		for(Customer cust: customer) {
 			
 			if(cust.getLoginName().equals(loginName)) {
@@ -281,7 +285,8 @@ public class BankRepositoryJdbc implements BankRepository {
 		//LOGGER.info(new BankRepositoryJdbc().findAllAccounts());
 		//LOGGER.info(new BankRepositoryJdbc().findAllCustomers());
 		//LOGGER.info(new BankRepositoryJdbc().findByLoginName());
-		LOGGER.info(new BankRepositoryJdbc().findBalanceByCustomerId(1L));
+		//LOGGER.info(new BankRepositoryJdbc().findBalanceByCustomerId(1L));
+		LOGGER.info(new BankRepositoryJdbc().findBalanceByLoginName("anton"));
 
 
 		

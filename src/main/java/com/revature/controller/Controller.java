@@ -34,22 +34,8 @@ public class Controller {
 	
 	Scanner	scanner = new Scanner(System.in);
 
-	//Figure out how this applies to hash
-	//private String loginPassword = "";
-
 	public Controller() {}	
 
-//	public Controller(String loginPassword) {
-//		this.loginPassword = loginPassword;
-//	}
-//
-//	public String getLoginPassword() {
-//		return loginPassword;
-//	}
-//
-//	public void setLoginPassword(String loginPassword) {
-//		this.loginPassword = loginPassword;
-//	}
 
 	public String getLoginName() {
 		return customer.getLoginName();
@@ -159,7 +145,7 @@ public class Controller {
 		switch (option) {
 		case 1:
 			//View Balance
-			//LOGGER.info(bankService.getAccountBalance(getLoginId()));
+			LOGGER.info(bankService.getAccountBalanceByLoginName(getLoginName()));
 			break;
 		case 2:
 			//Withdraw Money

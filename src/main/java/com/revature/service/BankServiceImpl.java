@@ -89,9 +89,16 @@ public class BankServiceImpl implements BankService {
 		
 	}
 	
-	public double getAccountBalance(Long customerId) {
-		LOGGER.info("In getAccountBalance");
+	public double getAccountBalanceByCustomerId(Long customerId) {
+		LOGGER.info("In getAccountBalanceByCustomerId");
 		double accountBalance = repository.findBalanceByCustomerId(customerId);
+		
+		return accountBalance;
+	}
+	
+	public double getAccountBalanceByLoginName(String loginName) {
+		LOGGER.info("In getAccountBalanceByLogin");
+		double accountBalance = repository.findBalanceByLoginName(loginName);
 		
 		return accountBalance;
 	}
@@ -101,6 +108,7 @@ public class BankServiceImpl implements BankService {
 		//LOGGER.info(new BankRepositoryJdbc().findAllCustomers());
 		//LOGGER.info(new BankRepositoryJdbc().findByLoginName());		
 		//LOGGER.info(new BankRepositoryJdbc().isValidLoginName("TestLogin1"));
+		//LOGGER.info(new BankRepositoryJdbc().findBalanceByLoginName("anton"));
 	}
 	
 	
