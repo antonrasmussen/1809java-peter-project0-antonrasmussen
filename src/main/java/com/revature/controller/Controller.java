@@ -92,8 +92,6 @@ public class Controller {
 
 	}
 
-
-
 	public void login() {
 		
 		System.out.print("Please enter your login name: ");
@@ -150,6 +148,8 @@ public class Controller {
 		System.out.println("|                          |");
 		System.out.println("============================");
 
+		//LOGGER.info(bankService.getAccountBalance(getLoginId()));
+		
 		
 		System.out.print("Select option: ");
 
@@ -159,6 +159,7 @@ public class Controller {
 		switch (option) {
 		case 1:
 			//View Balance
+			//LOGGER.info(bankService.getAccountBalance(getLoginId()));
 			break;
 		case 2:
 			//Withdraw Money

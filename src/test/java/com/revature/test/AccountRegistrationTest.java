@@ -30,14 +30,14 @@ public class AccountRegistrationTest {
 	@Before
 	public void setUp() {
 		bankService = new BankServiceImpl();
-//		testAccount = new Account(
-//				null,
-//				"SAVINGS", 
-//				"ACTIVE", 
-//				0.00, 
-//				new Customer(1L),
-//				null);
-//
+		testAccount = new Account(
+				null,
+				"SAVINGS", 
+				"ACTIVE", 
+				0.00, 
+				new Customer(6L),
+				null);
+
 //		testAccountWrong = new Account(
 //				null, 
 //				null, 
@@ -46,25 +46,24 @@ public class AccountRegistrationTest {
 //				new Customer(2L),
 //				null);
 		
-		testCustomer = new Customer(
-				null,
-				"Jane",
-				"Doe",
-				"testlogin2",
-				new Account(41L), // The account_num needs to exist already
-				"jane@email",
-				null);
+//		testCustomer = new Customer(
+//				null,
+//				"Jane",
+//				"Doe",
+//				"testlogin2",
+//				"jane@email",
+//				null);
 	}
 
-//	@Test
-//	public void registrationSuccessAccount() {
-//		assertTrue(bankService.registerAccount(testAccount));
-//	}
-//	
 	@Test
-	public void registrationSuccessCustomer() {
-		assertTrue(bankService.registerCustomer(testCustomer));
+	public void registrationSuccessAccount() {
+		assertTrue(bankService.registerAccount(testAccount));
 	}
+	
+//	@Test
+//	public void registrationSuccessCustomer() {
+//		assertTrue(bankService.registerCustomer(testCustomer));
+//	}
 
 
 //	@Test(expected = BankRegistrationException.class)
@@ -76,8 +75,8 @@ public class AccountRegistrationTest {
 	@After
 	public void tearDown() {
 		bankService = null;
-		//testAccount = null;
-		testCustomer = null;
+		testAccount = null;
+		//testCustomer = null;
 		//testAccountWrong = null;
 	}
 }

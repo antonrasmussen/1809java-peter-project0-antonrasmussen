@@ -49,13 +49,6 @@ public class BankRepositoryJdbc implements BankRepository {
 
 
 	@Override
-	public boolean insertProceedure(Account account) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
-	@Override
 	public Set<Account> findAllAccounts() {
 		try(Connection connection = ConnectionUtil.getConnection()) {
 			String sql = "SELECT * FROM ACCOUNT";
@@ -110,14 +103,13 @@ public class BankRepositoryJdbc implements BankRepository {
 		try(Connection connection = ConnectionUtil.getConnection()){
 			int parameterIndex = 0;
 
-			String sql = "INSERT INTO CUSTOMER VALUES (NULL, ?, ?, ?, ?, ?, NULL)";
+			String sql = "INSERT INTO CUSTOMER VALUES (NULL, ?, ?, ?, ?, NULL)";
 
 			PreparedStatement statement = connection.prepareStatement(sql);
 			//-->customer id is NULL
 			statement.setString(++parameterIndex, customer.getFirstName());
 			statement.setString(++parameterIndex, customer.getLastName());
 			statement.setString(++parameterIndex, customer.getLoginName());
-			statement.setLong(++parameterIndex, customer.getAccount().getAccountNumber());
 			statement.setString(++parameterIndex, customer.getEmailAddress());
 			 // Chain to get PK
 			//-->customer hash is NULL
@@ -137,12 +129,6 @@ public class BankRepositoryJdbc implements BankRepository {
 
 
 	@Override
-	public boolean insertProceedure(Customer customer) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public Set<Customer> findAllCustomers() {
 		try(Connection connection = ConnectionUtil.getConnection()) {
 			String sql = "SELECT * FROM CUSTOMER";
@@ -156,7 +142,6 @@ public class BankRepositoryJdbc implements BankRepository {
 						result.getString("C_FIRST_NAME"),
 						result.getString("C_LAST_NAME"),
 						result.getString("C_LOGIN_NAME"),
-						new Account(result.getLong("A_ACCOUNT_NUMBER")),
 						result.getString("C_EMAIL_ADDRESS")));
 			}
 
@@ -174,11 +159,60 @@ public class BankRepositoryJdbc implements BankRepository {
 		return null;
 	}
 
+	
+	//View balance (by customer)
+	//> SELECT SUM (A_ACCOUNT_BALANCE) FROM ACCOUNT WHERE C_ID = [C_ID];
 
 	@Override
-	public Customer findByCustomerId(long id) {
-		// TODO Auto-generated method stub
-		return null;
+	public double findBalanceByCustomerId(long id) {
+		try(Connection connection = ConnectionUtil.getConnection()) {
+			String sql = "SELECT A_ACCOUNT_BALANCE FROM ACCOUNT WHERE C_ID = " + id;
+			PreparedStatement statement = connection.prepareStatement(sql);
+			ResultSet result = statement.executeQuery();
+
+			//The Customer Set
+			double balanceAccumulator = 0;
+			while(result.next()) {
+				//No need to do SELECT SUM(A_ACCOUNT_BALANCE) because of below accumulator
+				balanceAccumulator += result.getDouble("A_ACCOUNT_BALANCE");
+			}
+			
+			return balanceAccumulator;
+		} catch (SQLException e) {
+
+			LOGGER.error("Couldn't retrieve balance", e);
+		}
+		return 0;
+	}
+	
+	@Override
+	public double findBalanceByLoginName(String loginName) {
+		try(Connection connection = ConnectionUtil.getConnection()) {
+			
+			/////////////////////////////////////////////////////////////////////////
+			String sql = "select account.c_id, "
+					+ "account.a_account_number, "
+					+ "account.a_account_balance, "
+					+ "customer." + loginName
+					+ " from account "
+					+ "inner join customer "
+					+ "on account.c_id = customer.c_id";
+			PreparedStatement statement = connection.prepareStatement(sql);
+			ResultSet result = statement.executeQuery();
+
+			//The Customer Set
+			double balanceAccumulator = 0;
+			while(result.next()) {
+				//No need to do SELECT SUM(A_ACCOUNT_BALANCE) because of below accumulator
+				balanceAccumulator += result.getDouble("A_ACCOUNT_BALANCE");
+			}
+			
+			return balanceAccumulator;
+		} catch (SQLException e) {
+
+			LOGGER.error("Couldn't retrieve balance", e);
+		}
+		return 0;
 	}
 
 
@@ -235,11 +269,19 @@ public class BankRepositoryJdbc implements BankRepository {
 
 		return truthFlag;
 	}
+	
+
+	//View balance (by account): 
+	//> SELECT A_ACCOUNT_BALANCE FROM ACCOUNT WHERE A_ACCOUNT_NUMBER = [A_ACCOUNT_NUMBER];
+	
+	//Deposit money: 
+	//> UPDATE ACCOUNT SET A_ACCOUNT_BALANCE = [Money to Deposit] where C_ID = [C_ID] and A_ACCOUNT_NUMBER = [A_ACCOUNT_NUMBER];
 
 	public static void main(String[] args) {
 		//LOGGER.info(new BankRepositoryJdbc().findAllAccounts());
 		//LOGGER.info(new BankRepositoryJdbc().findAllCustomers());
 		//LOGGER.info(new BankRepositoryJdbc().findByLoginName());
+		LOGGER.info(new BankRepositoryJdbc().findBalanceByCustomerId(1L));
 
 
 		

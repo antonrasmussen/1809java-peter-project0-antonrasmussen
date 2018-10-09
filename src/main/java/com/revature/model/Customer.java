@@ -28,11 +28,6 @@ public class Customer implements Comparable<Customer>, Serializable {
 	 * C_LOGIN_NAME - Not nullable
 	 */
 	private String loginName;
-
-	/**
-	 * Account
-	 */
-	private Account account;
 	
 	/*
 	 * 	CUSTOMER_HASH
@@ -53,7 +48,6 @@ public class Customer implements Comparable<Customer>, Serializable {
 			String firstName, 
 			String lastName, 
 			String loginName,
-			Account account, 
 			String emailAddress, 
 			String customerHash) {
 		
@@ -61,20 +55,17 @@ public class Customer implements Comparable<Customer>, Serializable {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.loginName = loginName;
-		this.account = account;
 		this.emailAddress = emailAddress;	
 		this.customerHash = customerHash;
 
 	}
 	
 	// For findAllCustomers()
-	public Customer(String firstName, String lastName, String loginName,
-			Account account, String emailAddress) {
+	public Customer(String firstName, String lastName, String loginName, String emailAddress) {
 		
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.loginName = loginName;
-		this.account = account;
 		this.emailAddress = emailAddress;	
 
 	} 
@@ -90,6 +81,10 @@ public class Customer implements Comparable<Customer>, Serializable {
 
 	public Long getId() {
 		return id;
+	}
+	
+	public Long getId(Customer customer) {
+		return customer.id;
 	}
 
 	public void setId(Long id) {
@@ -119,14 +114,6 @@ public class Customer implements Comparable<Customer>, Serializable {
 	public void setLoginName(String loginName) {
 		this.loginName = loginName;
 	}
-
-	public Account getAccount() {
-		return account;
-	}
-
-	public void setAccount(Account account) {
-		this.account = account;
-	}
 	
 	public String getEmailAddress() {
 		return emailAddress;
@@ -151,7 +138,6 @@ public class Customer implements Comparable<Customer>, Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((account == null) ? 0 : account.hashCode());
 		result = prime * result + ((customerHash == null) ? 0 : customerHash.hashCode());
 		result = prime * result + ((emailAddress == null) ? 0 : emailAddress.hashCode());
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
@@ -171,11 +157,6 @@ public class Customer implements Comparable<Customer>, Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Customer other = (Customer) obj;
-		if (account == null) {
-			if (other.account != null)
-				return false;
-		} else if (!account.equals(other.account))
-			return false;
 		if (customerHash == null) {
 			if (other.customerHash != null)
 				return false;
@@ -213,7 +194,7 @@ public class Customer implements Comparable<Customer>, Serializable {
 	@Override
 	public String toString() {
 		return "Customer [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", loginName=" + loginName
-				+ ", account=" + account + ", customerHash=" + customerHash + ", emailAddress=" + emailAddress + "]";
+				+ ", customerHash=" + customerHash + ", emailAddress=" + emailAddress + "]";
 	}
 
 

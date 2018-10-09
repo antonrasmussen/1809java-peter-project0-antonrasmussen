@@ -82,13 +82,6 @@ public interface BankService {
 	 */
 	Set<Customer> getCustomersByAccountStatus(Account accountStatus);
 	
-	/**
-	 * Get a customer by their customer id
-	 * 
-	 * @param id
-	 * @return a single customer
-	 */
-	Customer getCustomer(Long id);	
 	
 	/**
 	 * Check to see if loginName is in database
@@ -96,5 +89,15 @@ public interface BankService {
 	 * @return true or false
 	 */
 	boolean bankHasLoginName(String loginName);
+	
+	
+	/**
+	 * Get the account balance based on customerId; this
+	 * will be the sum of balances across all accounts for one customer
+	 * 
+	 * @param customerId
+	 * @return double accountBalance (total across all accounts)
+	 */
+	public double getAccountBalance(Long customerId);
 
 }

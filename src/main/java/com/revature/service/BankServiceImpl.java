@@ -76,11 +76,6 @@ public class BankServiceImpl implements BankService {
 		return null;
 	}
 
-	@Override
-	public Customer getCustomer(Long id) {
-		
-		return repository.findByCustomerId(id);
-	}
 	
 	public boolean bankHasLoginName(String loginName) {
 		LOGGER.info("In bankHasLoginName");
@@ -92,6 +87,13 @@ public class BankServiceImpl implements BankService {
 		}
 		return wasSuccessful;
 		
+	}
+	
+	public double getAccountBalance(Long customerId) {
+		LOGGER.info("In getAccountBalance");
+		double accountBalance = repository.findBalanceByCustomerId(customerId);
+		
+		return accountBalance;
 	}
 	
 	public static void main(String[] args) {

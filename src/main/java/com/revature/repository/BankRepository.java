@@ -27,19 +27,6 @@ public interface BankRepository {
 	 */
 	boolean insert(Customer customer);
 	
-	/**
-	 * It should use a CallableStatement and a stored procedure.
-	 * @param account
-	 * @return If the registration was successful
-	 */
-	boolean insertProceedure(Account account);
-	
-	/**
-	 * It should use a CallableStatement and a stored procedure.
-	 * @param customer
-	 * @return If the registration was successful
-	 */
-	boolean insertProceedure(Customer customer);
 	
 	/*
 	 * Read operations
@@ -68,11 +55,14 @@ public interface BankRepository {
 	Account findByAccountNumber(long accountNumber);
 	
 	/**
-	 * Returns a customer based on its id (there is only one or none)
+	 * Returns a customer's balance by their id, which means
+	 * a sum of all accounts under one customer id
 	 * @param id
-	 * @return Set<Customer>
+	 * @return double balance total by customer id
 	 */	
-	Customer findByCustomerId(long id);
+	double findBalanceByCustomerId(long id);
+	
+	double findBalanceByLoginName(String loginName);
 	
 	/**
 	 * Returns a group of accounts depending on the accountType
@@ -81,10 +71,6 @@ public interface BankRepository {
 	 */
 	Set<Account> findByAccountType(String accountType);
 	
-	//
-	//TODO: Add more methods here for various ways to search
-	//
-	
 	/**
 	 * Returns customer(s) based on firstName and Last name
 	 * (Can contain duplicates)
@@ -92,7 +78,6 @@ public interface BankRepository {
 	 * @return Set<Customer>
 	 */	
 	Set<Customer> findByName(String firstName, String lastName);
-	
 	
 	/**
 	 * Returns a customer when given a login name
