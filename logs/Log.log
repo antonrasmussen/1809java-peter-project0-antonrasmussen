@@ -2077,3 +2077,158 @@ java.sql.SQLSyntaxErrorException: ORA-00904: "TESTLOGIN2": invalid identifier
 2018-10-09 07:25:08 INFO  BankService:100 - In getAccountBalanceByLogin
 2018-10-09 07:25:08 INFO  ConnectionUtil:193 - In findBalanceByLogingName
 2018-10-09 07:25:08 INFO  Controller:148 - 4075.0
+2018-10-09 07:29:40 INFO  BankService:81 - In bankHasLoginName
+2018-10-09 07:29:40 INFO  ConnectionUtil:259 - In isValidLoginName
+2018-10-09 07:29:41 INFO  ConnectionUtil:269 - INVALID
+2018-10-09 07:29:41 INFO  ConnectionUtil:265 - VALID
+2018-10-09 07:29:41 INFO  Controller:103 - In else of inValidSession
+2018-10-09 07:30:28 INFO  BankService:81 - In bankHasLoginName
+2018-10-09 07:30:28 INFO  ConnectionUtil:259 - In isValidLoginName
+2018-10-09 07:30:29 INFO  ConnectionUtil:269 - INVALID
+2018-10-09 07:30:29 INFO  ConnectionUtil:265 - VALID
+2018-10-09 07:30:29 INFO  Controller:103 - In else of inValidSession
+2018-10-09 07:30:39 INFO  BankService:100 - In getAccountBalanceByLogin
+2018-10-09 07:30:39 INFO  ConnectionUtil:193 - In findBalanceByLogingName
+2018-10-09 07:32:32 INFO  BankService:81 - In bankHasLoginName
+2018-10-09 07:32:32 INFO  ConnectionUtil:259 - In isValidLoginName
+2018-10-09 07:32:32 INFO  ConnectionUtil:269 - INVALID
+2018-10-09 07:32:32 INFO  ConnectionUtil:265 - VALID
+2018-10-09 07:32:32 INFO  Controller:103 - In else of inValidSession
+2018-10-09 07:32:41 INFO  BankService:100 - In getAccountBalanceByLogin
+2018-10-09 07:32:41 INFO  ConnectionUtil:193 - In findBalanceByLogingName
+2018-10-09 08:37:42 ERROR ConnectionUtil:252 - Couldn't retrieve all accounts
+java.sql.SQLException: Missing IN or OUT parameter at index:: 1
+	at oracle.jdbc.driver.OraclePreparedStatement.processCompletedBindRow(OraclePreparedStatement.java:1878)
+	at oracle.jdbc.driver.OraclePreparedStatement.executeInternal(OraclePreparedStatement.java:3815)
+	at oracle.jdbc.driver.OraclePreparedStatement.executeQuery(OraclePreparedStatement.java:3867)
+	at oracle.jdbc.driver.OraclePreparedStatementWrapper.executeQuery(OraclePreparedStatementWrapper.java:1502)
+	at com.revature.repository.BankRepositoryJdbc.getAccountNumbersByLoginName(BankRepositoryJdbc.java:234)
+	at com.revature.repository.BankRepositoryJdbc.main(BankRepositoryJdbc.java:328)
+2018-10-09 08:37:42 INFO  ConnectionUtil:328 - 
+2018-10-09 08:40:57 ERROR ConnectionUtil:252 - Couldn't retrieve all accounts
+java.sql.SQLException: Missing IN or OUT parameter at index:: 1
+	at oracle.jdbc.driver.OraclePreparedStatement.processCompletedBindRow(OraclePreparedStatement.java:1878)
+	at oracle.jdbc.driver.OraclePreparedStatement.executeInternal(OraclePreparedStatement.java:3815)
+	at oracle.jdbc.driver.OraclePreparedStatement.executeQuery(OraclePreparedStatement.java:3867)
+	at oracle.jdbc.driver.OraclePreparedStatementWrapper.executeQuery(OraclePreparedStatementWrapper.java:1502)
+	at com.revature.repository.BankRepositoryJdbc.getAccountNumbersByLoginName(BankRepositoryJdbc.java:234)
+	at com.revature.repository.BankRepositoryJdbc.main(BankRepositoryJdbc.java:328)
+2018-10-09 08:40:57 INFO  ConnectionUtil:328 - 
+2018-10-09 08:43:58 INFO  ConnectionUtil:330 - [123456, 777777]
+2018-10-09 10:36:32 INFO  ConnectionUtil:330 - [48, 46, 47]
+2018-10-09 10:47:14 INFO  ConnectionUtil:336 - Account [accountNumber=48, accountType=null, accountStatus=null, accountBalance=0.0, accountHash=null, customer=null]
+2018-10-09 10:47:58 INFO  ConnectionUtil:336 - Account [accountNumber=48, accountType=null, accountStatus=null, accountBalance=0.0, accountHash=null, customer=null]
+2018-10-09 11:29:36 INFO  ConnectionUtil:336 - 0.0
+2018-10-09 11:30:34 INFO  ConnectionUtil:336 - 4075.0
+2018-10-09 12:18:31 INFO  ConnectionUtil:336 - Account [accountNumber=123456, accountType=null, accountStatus=null, accountBalance=4075.0, accountHash=null, customer=null]
+2018-10-09 12:19:28 INFO  ConnectionUtil:336 - 4075.0
+2018-10-09 12:20:09 INFO  ConnectionUtil:336 - Account [accountNumber=123456, accountType=null, accountStatus=null, accountBalance=4075.0, accountHash=null, customer=null]
+2018-10-09 12:32:01 ERROR ConnectionUtil:260 - Couldn't retrieve balance
+java.sql.SQLException: Missing IN or OUT parameter at index:: 2
+	at oracle.jdbc.driver.OraclePreparedStatement.processCompletedBindRow(OraclePreparedStatement.java:1878)
+	at oracle.jdbc.driver.OraclePreparedStatement.executeInternal(OraclePreparedStatement.java:3815)
+	at oracle.jdbc.driver.OraclePreparedStatement.executeQuery(OraclePreparedStatement.java:3867)
+	at oracle.jdbc.driver.OraclePreparedStatementWrapper.executeQuery(OraclePreparedStatementWrapper.java:1502)
+	at com.revature.repository.BankRepositoryJdbc.findSingleBalanceByLoginNameAndAccountNumber(BankRepositoryJdbc.java:248)
+	at com.revature.repository.BankRepositoryJdbc.main(BankRepositoryJdbc.java:370)
+2018-10-09 12:32:01 INFO  ConnectionUtil:370 - 0.0
+2018-10-09 12:32:55 ERROR ConnectionUtil:260 - Couldn't retrieve balance
+java.sql.SQLException: Invalid column index
+	at oracle.jdbc.driver.OraclePreparedStatement.setStringInternal(OraclePreparedStatement.java:5741)
+	at oracle.jdbc.driver.OraclePreparedStatement.setString(OraclePreparedStatement.java:5729)
+	at oracle.jdbc.driver.OraclePreparedStatementWrapper.setString(OraclePreparedStatementWrapper.java:289)
+	at com.revature.repository.BankRepositoryJdbc.findSingleBalanceByLoginNameAndAccountNumber(BankRepositoryJdbc.java:245)
+	at com.revature.repository.BankRepositoryJdbc.main(BankRepositoryJdbc.java:370)
+2018-10-09 12:32:55 INFO  ConnectionUtil:370 - 0.0
+2018-10-09 12:33:15 ERROR ConnectionUtil:260 - Couldn't retrieve balance
+java.sql.SQLException: Invalid column index
+	at oracle.jdbc.driver.OraclePreparedStatement.setStringInternal(OraclePreparedStatement.java:5741)
+	at oracle.jdbc.driver.OraclePreparedStatement.setString(OraclePreparedStatement.java:5729)
+	at oracle.jdbc.driver.OraclePreparedStatementWrapper.setString(OraclePreparedStatementWrapper.java:289)
+	at com.revature.repository.BankRepositoryJdbc.findSingleBalanceByLoginNameAndAccountNumber(BankRepositoryJdbc.java:245)
+	at com.revature.repository.BankRepositoryJdbc.main(BankRepositoryJdbc.java:370)
+2018-10-09 12:33:15 INFO  ConnectionUtil:370 - 0.0
+2018-10-09 12:33:23 ERROR ConnectionUtil:260 - Couldn't retrieve balance
+java.sql.SQLException: Missing IN or OUT parameter at index:: 2
+	at oracle.jdbc.driver.OraclePreparedStatement.processCompletedBindRow(OraclePreparedStatement.java:1878)
+	at oracle.jdbc.driver.OraclePreparedStatement.executeInternal(OraclePreparedStatement.java:3815)
+	at oracle.jdbc.driver.OraclePreparedStatement.executeQuery(OraclePreparedStatement.java:3867)
+	at oracle.jdbc.driver.OraclePreparedStatementWrapper.executeQuery(OraclePreparedStatementWrapper.java:1502)
+	at com.revature.repository.BankRepositoryJdbc.findSingleBalanceByLoginNameAndAccountNumber(BankRepositoryJdbc.java:248)
+	at com.revature.repository.BankRepositoryJdbc.main(BankRepositoryJdbc.java:370)
+2018-10-09 12:33:23 INFO  ConnectionUtil:370 - 0.0
+2018-10-09 12:35:40 ERROR ConnectionUtil:260 - Couldn't retrieve balance
+java.sql.SQLException: Missing IN or OUT parameter at index:: 2
+	at oracle.jdbc.driver.OraclePreparedStatement.processCompletedBindRow(OraclePreparedStatement.java:1878)
+	at oracle.jdbc.driver.OraclePreparedStatement.executeInternal(OraclePreparedStatement.java:3815)
+	at oracle.jdbc.driver.OraclePreparedStatement.executeQuery(OraclePreparedStatement.java:3867)
+	at oracle.jdbc.driver.OraclePreparedStatementWrapper.executeQuery(OraclePreparedStatementWrapper.java:1502)
+	at com.revature.repository.BankRepositoryJdbc.findSingleBalanceByLoginNameAndAccountNumber(BankRepositoryJdbc.java:248)
+	at com.revature.repository.BankRepositoryJdbc.main(BankRepositoryJdbc.java:370)
+2018-10-09 12:35:40 INFO  ConnectionUtil:370 - 0.0
+2018-10-09 12:36:03 ERROR ConnectionUtil:260 - Couldn't retrieve balance
+java.sql.SQLException: Missing IN or OUT parameter at index:: 1
+	at oracle.jdbc.driver.OraclePreparedStatement.processCompletedBindRow(OraclePreparedStatement.java:1878)
+	at oracle.jdbc.driver.OraclePreparedStatement.executeInternal(OraclePreparedStatement.java:3815)
+	at oracle.jdbc.driver.OraclePreparedStatement.executeQuery(OraclePreparedStatement.java:3867)
+	at oracle.jdbc.driver.OraclePreparedStatementWrapper.executeQuery(OraclePreparedStatementWrapper.java:1502)
+	at com.revature.repository.BankRepositoryJdbc.findSingleBalanceByLoginNameAndAccountNumber(BankRepositoryJdbc.java:248)
+	at com.revature.repository.BankRepositoryJdbc.main(BankRepositoryJdbc.java:370)
+2018-10-09 12:36:03 INFO  ConnectionUtil:370 - 0.0
+2018-10-09 12:43:02 ERROR ConnectionUtil:260 - Couldn't retrieve balance
+java.sql.SQLException: Missing IN or OUT parameter at index:: 2
+	at oracle.jdbc.driver.OraclePreparedStatement.processCompletedBindRow(OraclePreparedStatement.java:1878)
+	at oracle.jdbc.driver.OraclePreparedStatement.executeInternal(OraclePreparedStatement.java:3815)
+	at oracle.jdbc.driver.OraclePreparedStatement.executeQuery(OraclePreparedStatement.java:3867)
+	at oracle.jdbc.driver.OraclePreparedStatementWrapper.executeQuery(OraclePreparedStatementWrapper.java:1502)
+	at com.revature.repository.BankRepositoryJdbc.findSingleBalanceByLoginNameAndAccountNumber(BankRepositoryJdbc.java:248)
+	at com.revature.repository.BankRepositoryJdbc.main(BankRepositoryJdbc.java:370)
+2018-10-09 12:43:02 INFO  ConnectionUtil:370 - 0.0
+2018-10-09 12:43:31 ERROR ConnectionUtil:260 - Couldn't retrieve balance
+java.sql.SQLException: Missing IN or OUT parameter at index:: 2
+	at oracle.jdbc.driver.OraclePreparedStatement.processCompletedBindRow(OraclePreparedStatement.java:1878)
+	at oracle.jdbc.driver.OraclePreparedStatement.executeInternal(OraclePreparedStatement.java:3815)
+	at oracle.jdbc.driver.OraclePreparedStatement.executeQuery(OraclePreparedStatement.java:3867)
+	at oracle.jdbc.driver.OraclePreparedStatementWrapper.executeQuery(OraclePreparedStatementWrapper.java:1502)
+	at com.revature.repository.BankRepositoryJdbc.findSingleBalanceByLoginNameAndAccountNumber(BankRepositoryJdbc.java:248)
+	at com.revature.repository.BankRepositoryJdbc.main(BankRepositoryJdbc.java:370)
+2018-10-09 12:43:31 INFO  ConnectionUtil:370 - 0.0
+2018-10-09 12:43:42 ERROR ConnectionUtil:260 - Couldn't retrieve balance
+java.sql.SQLException: Invalid column index
+	at oracle.jdbc.driver.OraclePreparedStatement.setStringInternal(OraclePreparedStatement.java:5741)
+	at oracle.jdbc.driver.OraclePreparedStatement.setString(OraclePreparedStatement.java:5729)
+	at oracle.jdbc.driver.OraclePreparedStatementWrapper.setString(OraclePreparedStatementWrapper.java:289)
+	at com.revature.repository.BankRepositoryJdbc.findSingleBalanceByLoginNameAndAccountNumber(BankRepositoryJdbc.java:246)
+	at com.revature.repository.BankRepositoryJdbc.main(BankRepositoryJdbc.java:370)
+2018-10-09 12:43:42 INFO  ConnectionUtil:370 - 0.0
+2018-10-09 12:43:51 ERROR ConnectionUtil:260 - Couldn't retrieve balance
+java.sql.SQLSyntaxErrorException: ORA-01722: invalid number
+
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:450)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:399)
+	at oracle.jdbc.driver.T4C8Oall.processError(T4C8Oall.java:1017)
+	at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:655)
+	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:249)
+	at oracle.jdbc.driver.T4C8Oall.doOALL(T4C8Oall.java:566)
+	at oracle.jdbc.driver.T4CPreparedStatement.doOall8(T4CPreparedStatement.java:215)
+	at oracle.jdbc.driver.T4CPreparedStatement.doOall8(T4CPreparedStatement.java:58)
+	at oracle.jdbc.driver.T4CPreparedStatement.executeForDescribe(T4CPreparedStatement.java:776)
+	at oracle.jdbc.driver.OracleStatement.executeMaybeDescribe(OracleStatement.java:897)
+	at oracle.jdbc.driver.OracleStatement.doExecuteWithTimeout(OracleStatement.java:1034)
+	at oracle.jdbc.driver.OraclePreparedStatement.executeInternal(OraclePreparedStatement.java:3820)
+	at oracle.jdbc.driver.OraclePreparedStatement.executeQuery(OraclePreparedStatement.java:3867)
+	at oracle.jdbc.driver.OraclePreparedStatementWrapper.executeQuery(OraclePreparedStatementWrapper.java:1502)
+	at com.revature.repository.BankRepositoryJdbc.findSingleBalanceByLoginNameAndAccountNumber(BankRepositoryJdbc.java:248)
+	at com.revature.repository.BankRepositoryJdbc.main(BankRepositoryJdbc.java:370)
+2018-10-09 12:43:51 INFO  ConnectionUtil:370 - 0.0
+2018-10-09 12:44:00 ERROR ConnectionUtil:260 - Couldn't retrieve balance
+java.sql.SQLException: Missing IN or OUT parameter at index:: 1
+	at oracle.jdbc.driver.OraclePreparedStatement.processCompletedBindRow(OraclePreparedStatement.java:1878)
+	at oracle.jdbc.driver.OraclePreparedStatement.executeInternal(OraclePreparedStatement.java:3815)
+	at oracle.jdbc.driver.OraclePreparedStatement.executeQuery(OraclePreparedStatement.java:3867)
+	at oracle.jdbc.driver.OraclePreparedStatementWrapper.executeQuery(OraclePreparedStatementWrapper.java:1502)
+	at com.revature.repository.BankRepositoryJdbc.findSingleBalanceByLoginNameAndAccountNumber(BankRepositoryJdbc.java:248)
+	at com.revature.repository.BankRepositoryJdbc.main(BankRepositoryJdbc.java:370)
+2018-10-09 12:44:00 INFO  ConnectionUtil:370 - 0.0
+2018-10-09 12:44:13 INFO  ConnectionUtil:370 - 3500.0
+2018-10-09 12:55:12 INFO  ConnectionUtil:370 - 4000.0

@@ -52,7 +52,7 @@ public interface BankRepository {
 	 * @param accountNumber
 	 * @return Set<Account
 	 */	
-	Account findByAccountNumber(long accountNumber);
+	//Account findByAccountNumber(long accountNumber);
 	
 	/**
 	 * Returns a customer's balance by their id, which means
@@ -62,7 +62,10 @@ public interface BankRepository {
 	 */	
 	double findBalanceByCustomerId(long id);
 	
-	double findBalanceByLoginName(String loginName);
+	double findSingleBalanceByLoginNameAndAccountNumber(String loginName, Long accountNumber);
+	
+	double findTotalBalanceByLoginName(String loginName);
+
 	
 	/**
 	 * Returns a group of accounts depending on the accountType
@@ -70,6 +73,12 @@ public interface BankRepository {
 	 * @return Set<Account>
 	 */
 	Set<Account> findByAccountType(String accountType);
+	
+	double depositToAccount(Account accountNumber);
+	
+	Set<Long> getAccountNumbersByLoginName(String loginName);
+	
+	public Account findByAccountNumber(String loginName, long accountNumber);
 	
 	/**
 	 * Returns customer(s) based on firstName and Last name

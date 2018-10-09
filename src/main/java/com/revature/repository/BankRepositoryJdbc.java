@@ -70,7 +70,7 @@ public class BankRepositoryJdbc implements BankRepository {
 			}
 
 			if(accounts.size() == 0) {
-				
+
 				LOGGER.info("No accounts to display");
 				return null;
 			}
@@ -84,9 +84,14 @@ public class BankRepositoryJdbc implements BankRepository {
 	}
 
 	@Override
-	public Account findByAccountNumber(long accountNumber) {
-		// TODO Auto-generated method stub
-		return null;
+	public Account findByAccountNumber(String loginName, long accountNumber) {
+		
+		Account account = new Account(accountNumber);
+		
+		account.setAccountBalance(findSingleBalanceByLoginNameAndAccountNumber(loginName, accountNumber));
+		
+		return account;
+		
 	}
 
 	@Override
@@ -111,7 +116,7 @@ public class BankRepositoryJdbc implements BankRepository {
 			statement.setString(++parameterIndex, customer.getLastName());
 			statement.setString(++parameterIndex, customer.getLoginName());
 			statement.setString(++parameterIndex, customer.getEmailAddress());
-			 // Chain to get PK
+			// Chain to get PK
 			//-->customer hash is NULL
 
 			//returns int num of rows
@@ -146,7 +151,7 @@ public class BankRepositoryJdbc implements BankRepository {
 			}
 
 			if(customers.size() == 0) {
-				
+
 				LOGGER.info("No customers to display");
 				return null;
 			}
@@ -159,17 +164,21 @@ public class BankRepositoryJdbc implements BankRepository {
 		return null;
 	}
 
-	
+
+
+	//TODO: View balance (by account): 
+	//> SELECT A_ACCOUNT_BALANCE FROM ACCOUNT WHERE A_ACCOUNT_NUMBER = [A_ACCOUNT_NUMBER];
+	// . . .
+
 	//View balance (by customer)
 	//> SELECT SUM (A_ACCOUNT_BALANCE) FROM ACCOUNT WHERE C_ID = [C_ID];
-
 	@Override
 	public double findBalanceByCustomerId(long id) {
 		try(Connection connection = ConnectionUtil.getConnection()) {
 			String sql = "SELECT A_ACCOUNT_BALANCE FROM ACCOUNT WHERE C_ID = " + id;
 			PreparedStatement statement = connection.prepareStatement(sql);
-			
-			
+
+
 			ResultSet result = statement.executeQuery();
 
 			//The Customer Set
@@ -178,7 +187,7 @@ public class BankRepositoryJdbc implements BankRepository {
 				//No need to do SELECT SUM(A_ACCOUNT_BALANCE) because of below accumulator
 				balanceAccumulator += result.getDouble("A_ACCOUNT_BALANCE");
 			}
-			
+
 			return balanceAccumulator;
 		} catch (SQLException e) {
 
@@ -186,12 +195,12 @@ public class BankRepositoryJdbc implements BankRepository {
 		}
 		return 0;
 	}
-	
+
 	@Override
-	public double findBalanceByLoginName(String loginName) {
+	public double findTotalBalanceByLoginName(String loginName) {
 		try(Connection connection = ConnectionUtil.getConnection()) {
-			LOGGER.info("In findBalanceByLogingName");
-			
+			//LOGGER.info("In findBalanceByLoginName");
+
 			String sql = "SELECT ACCOUNT.C_ID, "
 					+ "ACCOUNT.A_ACCOUNT_NUMBER, "
 					+ "ACCOUNT.A_ACCOUNT_BALANCE, "
@@ -201,7 +210,7 @@ public class BankRepositoryJdbc implements BankRepository {
 					+ "CUSTOMER.C_LOGIN_NAME = ?";
 			PreparedStatement statement = connection.prepareStatement(sql);
 			statement.setString(1, loginName);
-			
+
 			ResultSet result = statement.executeQuery();
 
 			//The Customer Set
@@ -210,12 +219,88 @@ public class BankRepositoryJdbc implements BankRepository {
 				//No need to do SELECT SUM(A_ACCOUNT_BALANCE) because of below accumulator
 				balanceAccumulator += result.getDouble("A_ACCOUNT_BALANCE");
 			}
-			
+
 			return balanceAccumulator;
 		} catch (SQLException e) {
 
 			LOGGER.error("Couldn't retrieve balance", e);
 		}
+		return 0;
+	}
+	
+	@Override
+	public double findSingleBalanceByLoginNameAndAccountNumber(String loginName, Long accountNumber) {
+		try(Connection connection = ConnectionUtil.getConnection()) {
+			//LOGGER.info("In findBalanceByLoginName");
+			
+			int parameterIndex = 0;
+			String sql = "SELECT ACCOUNT.C_ID, "
+					+ "ACCOUNT.A_ACCOUNT_NUMBER, "
+					+ "ACCOUNT.A_ACCOUNT_BALANCE, "
+					+ "CUSTOMER.C_LOGIN_NAME "
+					+ "FROM ACCOUNT INNER JOIN CUSTOMER "
+					+ "ON ACCOUNT.C_ID = CUSTOMER.C_ID WHERE "
+					+ "CUSTOMER.C_LOGIN_NAME = ? "
+					+ "AND ACCOUNT.A_ACCOUNT_NUMBER = ?";
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setString(1, loginName);
+			statement.setLong(2, accountNumber);
+			ResultSet result = statement.executeQuery();
+
+			//The Customer Set
+			double balanceAccumulator = 0;
+			while(result.next()) {
+				//No need to do SELECT SUM(A_ACCOUNT_BALANCE) because of below accumulator
+				balanceAccumulator = result.getDouble("A_ACCOUNT_BALANCE");
+			}
+
+			return balanceAccumulator;
+		} catch (SQLException e) {
+
+			LOGGER.error("Couldn't retrieve balance", e);
+		}
+		return 0;
+	}
+
+	public Set<Long> getAccountNumbersByLoginName(String loginName) {
+		try(Connection connection = ConnectionUtil.getConnection()) {
+			String sql = "SELECT ACCOUNT.A_ACCOUNT_NUMBER "
+					+ "FROM ACCOUNT "
+					+ "INNER JOIN CUSTOMER "
+					+ "ON ACCOUNT.C_ID = CUSTOMER.C_ID "
+					+ "WHERE CUSTOMER.C_LOGIN_NAME = ?";
+			PreparedStatement statement = connection.prepareStatement(sql);
+			
+			statement.setString(1, loginName);
+			
+			ResultSet result = statement.executeQuery();
+
+			//The Customer Set
+			Set<Long> accountNumbers = new HashSet<>();
+			while(result.next()) {
+				accountNumbers.add(result.getLong("A_ACCOUNT_NUMBER"));
+			}
+
+			if(accountNumbers.size() == 0) {
+
+				LOGGER.info("No accounts to display");
+				return null;
+			}
+
+			return accountNumbers;
+		} catch (SQLException e) {
+
+			LOGGER.error("Couldn't retrieve all accounts", e);
+		}
+		return null;
+	}
+
+
+
+	//Deposit money: 
+	//> UPDATE ACCOUNT SET A_ACCOUNT_BALANCE = [Money to Deposit] where C_ID = [C_ID] and A_ACCOUNT_NUMBER = [A_ACCOUNT_NUMBER];
+	public double depositToAccount(Account accountNumber) {
+
 		return 0;
 	}
 
@@ -225,7 +310,7 @@ public class BankRepositoryJdbc implements BankRepository {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	public Set<Customer> findByLoginName(String loginName) {
 		try(Connection connection = ConnectionUtil.getConnection()) {
 			String sql = "SELECT C_LOGIN_NAME FROM CUSTOMER";
@@ -238,9 +323,9 @@ public class BankRepositoryJdbc implements BankRepository {
 				customer.add(new Customer(
 						result.getString("C_LOGIN_NAME")));
 			}
-			
+
 			if(customer.size() == 0) {
-				
+
 				LOGGER.info("NOT a valid customer size");
 				return null;
 			}
@@ -253,43 +338,39 @@ public class BankRepositoryJdbc implements BankRepository {
 		}
 		return null;
 	}
-	
+
 	@Override
 	public boolean isValidLoginName(String loginName) {
-		LOGGER.info("In isValidLoginName");
+		//LOGGER.info("In isValidLoginName");
 		boolean truthFlag = false;
 		Set<Customer> customer = new BankRepositoryJdbc().findByLoginName(loginName);
 		for(Customer cust: customer) {
-			
+
 			if(cust.getLoginName().equals(loginName)) {
-				LOGGER.info("VALID");
+				//LOGGER.info("VALID");
 				return true;
 			}
 			else {
-				LOGGER.info("INVALID");
+				//LOGGER.info("INVALID");
 				truthFlag = false;
 			}
 		}
 
 		return truthFlag;
 	}
-	
 
-	//View balance (by account): 
-	//> SELECT A_ACCOUNT_BALANCE FROM ACCOUNT WHERE A_ACCOUNT_NUMBER = [A_ACCOUNT_NUMBER];
-	
-	//Deposit money: 
-	//> UPDATE ACCOUNT SET A_ACCOUNT_BALANCE = [Money to Deposit] where C_ID = [C_ID] and A_ACCOUNT_NUMBER = [A_ACCOUNT_NUMBER];
 
 	public static void main(String[] args) {
 		//LOGGER.info(new BankRepositoryJdbc().findAllAccounts());
 		//LOGGER.info(new BankRepositoryJdbc().findAllCustomers());
 		//LOGGER.info(new BankRepositoryJdbc().findByLoginName());
 		//LOGGER.info(new BankRepositoryJdbc().findBalanceByCustomerId(1L));
-		LOGGER.info(new BankRepositoryJdbc().findBalanceByLoginName("anton"));
+		//LOGGER.info(new BankRepositoryJdbc().findBalanceByLoginName("anton"));
+		//LOGGER.info(new BankRepositoryJdbc().getAccountNumbersByLoginName("testlogin2"));
+		LOGGER.info(new BankRepositoryJdbc().findSingleBalanceByLoginNameAndAccountNumber("anton", 123456L) + 500); // Call within Withdraw/Deposit Functions
 
 
-		
+
 	}
 
 }

@@ -24,6 +24,8 @@ import com.revature.service.BankServiceImpl;
  */
 
 public class Controller {
+	
+	//TODO: Validate user input by searching against database
 
 	public static final Logger LOGGER = Logger.getLogger(Controller.class);
 
@@ -86,18 +88,9 @@ public class Controller {
 
 		System.out.println();
 
-		//Mask password display
-		//TODO: Mask the actual input
-//		char[] unhashedPass = getLoginPassword().toCharArray();
-//		StringBuffer hashedPass = new StringBuffer();
-//		for(char c: unhashedPass) {
-//			hashedPass.append("*");
-//		}
-
 		checkValidSession();
 	}
 
-	//TODO: Validate user input by searching against database
 
 	public void checkValidSession() {
 		System.out.println("login name is:: " + getLoginName());
@@ -107,20 +100,15 @@ public class Controller {
 			login();
 		}
 		else {
-			LOGGER.info("In else of inValidSession");
+			//LOGGER.info("In else of inValidSession");
 			validatedMenu();
 		}
 
 	}
-	//Present Data to the User
+	
+	//Present Data to a validated user
 	public void validatedMenu() {
 
-		
-		// New Menu
-		// > View Balance
-		// > Withdraw Money
-		// > Deposit Money
-		
 		String nm = getLoginName();
 		
 		System.out.println("============================");
@@ -145,13 +133,25 @@ public class Controller {
 		switch (option) {
 		case 1:
 			//View Balance
-			LOGGER.info(bankService.getAccountBalanceByLoginName(getLoginName()));
+			//LOGGER.info(bankService.getAccountBalanceByLoginName(nm));
+			System.out.println();
+			System.out.println("|-----------------------|");
+			System.out.println("Your account balance is: " + bankService.getAccountBalanceByLoginName(nm));
+			System.out.println("|-----------------------|");
+			System.out.println();
+			System.out.println("Please select another menu choice");
+			System.out.println();
+			validatedMenu();
 			break;
 		case 2:
 			//Withdraw Money
+			//> Get a list of accounts
+			//> Choose which account to deposit to
 			break;
 		case 3:
 			//Deposit Money
+			//> Get a list of accounts
+			//> Choose which account to deposit to
 			break;
 		case 4:
 			System.out.println("Quit selected. Goodbye!");

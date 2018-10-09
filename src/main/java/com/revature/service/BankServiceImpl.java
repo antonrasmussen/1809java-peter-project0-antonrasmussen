@@ -43,7 +43,7 @@ public class BankServiceImpl implements BankService {
 	@Override
 	public Account getAccount(Long accountNumber) {
 		
-		return repository.findByAccountNumber(accountNumber);
+		return null; //repository.findByAccountNumber(accountNumber);
 	}
 	
 	//Customer methods
@@ -78,7 +78,7 @@ public class BankServiceImpl implements BankService {
 
 	
 	public boolean bankHasLoginName(String loginName) {
-		LOGGER.info("In bankHasLoginName");
+		//LOGGER.info("In bankHasLoginName");
 		boolean wasSuccessful = repository.isValidLoginName(loginName);
 		if(!wasSuccessful){
 			
@@ -97,8 +97,8 @@ public class BankServiceImpl implements BankService {
 	}
 	
 	public double getAccountBalanceByLoginName(String loginName) {
-		LOGGER.info("In getAccountBalanceByLogin");
-		double accountBalance = repository.findBalanceByLoginName(loginName);
+		//LOGGER.info("In getAccountBalanceByLogin");
+		double accountBalance = repository.findTotalBalanceByLoginName(loginName);
 		
 		return accountBalance;
 	}
