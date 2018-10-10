@@ -112,7 +112,7 @@ public class BankRepositoryJdbc implements BankRepository {
 		
 		Account account = new Account(accountNumber);
 		
-		account.setAccountBalance(findSingleBalanceByLoginNameAndAccountNumber(loginName, accountNumber));
+		account.setAccountBalance(findSingleBalance(loginName, accountNumber));
 		
 		return account;
 		
@@ -209,7 +209,7 @@ public class BankRepositoryJdbc implements BankRepository {
 	}
 
 	@Override
-	public double findTotalBalanceByLoginName(String loginName) {
+	public double findTotalBalance(String loginName) {
 		try(Connection connection = ConnectionUtil.getConnection()) {
 			//LOGGER.info("In findBalanceByLoginName");
 
@@ -241,7 +241,7 @@ public class BankRepositoryJdbc implements BankRepository {
 	}
 	
 	@Override
-	public double findSingleBalanceByLoginNameAndAccountNumber(String loginName, Long accountNumber) {
+	public double findSingleBalance(String loginName, Long accountNumber) {
 		try(Connection connection = ConnectionUtil.getConnection()) {
 			//LOGGER.info("In findBalanceByLoginName");
 			
@@ -394,9 +394,9 @@ public class BankRepositoryJdbc implements BankRepository {
 		LOGGER.info(new BankRepositoryJdbc().findAllCustomers());
 		LOGGER.info(new BankRepositoryJdbc().findByLoginName("anton"));
 		LOGGER.info(new BankRepositoryJdbc().findBalanceByCustomerId(1L));
-		LOGGER.info(new BankRepositoryJdbc().findTotalBalanceByLoginName("anton"));
+		LOGGER.info(new BankRepositoryJdbc().findTotalBalance("anton"));
 		LOGGER.info(new BankRepositoryJdbc().findAccountNumbersByLoginName("anton")); // sorted
-		LOGGER.info(new BankRepositoryJdbc().findSingleBalanceByLoginNameAndAccountNumber("anton", 123456L));
+		LOGGER.info(new BankRepositoryJdbc().findSingleBalance("anton", 123456L));
 		//LOGGER.info(new BankRepositoryJdbc().updateBalance(1000.00, 123456L)); //>Updates 
 
 

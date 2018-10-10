@@ -81,7 +81,7 @@ public interface BankRepository {
 	 * @param loginName
 	 * @return combined account balance
 	 */
-	double findTotalBalanceByLoginName(String loginName);
+	double findTotalBalance(String loginName);
 	
 	
 	/**
@@ -91,7 +91,7 @@ public interface BankRepository {
 	 * @param accountNumber
 	 * @return single account balance
 	 */
-	double findSingleBalanceByLoginNameAndAccountNumber(String loginName, Long accountNumber);
+	double findSingleBalance(String loginName, Long accountNumber);
 	
 	
 	/**

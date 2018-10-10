@@ -70,14 +70,14 @@ public class BankServiceImpl implements BankService {
 	@Override
 	public double getCombinedAccountBalance(String loginName) {
 		
-		double accountBalance = repository.findTotalBalanceByLoginName(loginName);
+		double accountBalance = repository.findTotalBalance(loginName);
 		
 		return accountBalance;
 	}
 	
 	@Override
 	public double getSingleAccountBalance(String loginName, Long accountNumber) {
-		double accountBalance = repository.findSingleBalanceByLoginNameAndAccountNumber(loginName, accountNumber);
+		double accountBalance = repository.findSingleBalance(loginName, accountNumber);
 		
 		return accountBalance;
 	}
@@ -100,9 +100,9 @@ public class BankServiceImpl implements BankService {
 	public static void main(String[] args) {
 		LOGGER.info(new BankRepositoryJdbc().findAllAccounts());
 		LOGGER.info(new BankRepositoryJdbc().findAllCustomers());
-		LOGGER.info(new BankRepositoryJdbc().findTotalBalanceByLoginName("anton"));		
+		LOGGER.info(new BankRepositoryJdbc().findTotalBalance("anton"));		
 		LOGGER.info(new BankRepositoryJdbc().isValidLoginName("anton"));
-		LOGGER.info(new BankRepositoryJdbc().findTotalBalanceByLoginName("anton"));
+		LOGGER.info(new BankRepositoryJdbc().findTotalBalance("anton"));
 	}
 	
 	
