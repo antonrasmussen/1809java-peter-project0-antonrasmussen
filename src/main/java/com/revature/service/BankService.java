@@ -98,7 +98,7 @@ public interface BankService {
 	 * @param customerId
 	 * @return double accountBalance (total across all accounts)
 	 */
-	public double getAccountBalanceByCustomerId(Long customerId);
+	double getAccountBalanceByCustomerId(Long customerId);
 	
 	/**
 	 * Get the account balance based on loginName; this
@@ -106,6 +106,8 @@ public interface BankService {
 	 * @param loginName
 	 * @return double accountBalance (total across all accounts)
 	 */
-	public double getAccountBalanceByLoginName(String loginName);
+	double getCombinedAccountBalanceByLoginName(String loginName);
+	
+	void setNewAccountBalance(double accountBalance, Long accountNumber);
 
 }

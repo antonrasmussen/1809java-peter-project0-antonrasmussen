@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 
@@ -51,7 +52,7 @@ public class Controller {
 	public void setLoginName(String loginName) {
 		customer.setLoginName(loginName);
 	}
-
+	
 	public void unvalidatedMenu() {
 		System.out.println("============================");
 		System.out.println("    Welcome to the Bank     ");
@@ -114,16 +115,17 @@ public class Controller {
 	//Present Data to a validated user
 	public void validatedMenu() {
 
-		String nm = getLoginName();
+		String logNme = getLoginName();
 
 		System.out.println("============================");
-		System.out.println("    Welcome " + nm     + "! ");
+		System.out.println("    Welcome " + logNme + "! ");
 		System.out.println("============================");
 		System.out.println("|                          |");
-		System.out.println("| 1. View Balance          |");
-		System.out.println("| 2. Withdraw Money        |");
-		System.out.println("| 3. Deposit Money         |");
-		System.out.println("| 4. Quit                  |");
+		System.out.println("| 1. View Combined Balance |");
+		System.out.println("| 2. View Itemized Balance |");
+		System.out.println("| 3. Withdraw Money        |");
+		System.out.println("| 4. Deposit Money         |");
+		System.out.println("| 5. Logout                |");
 		System.out.println("|                          |");
 		System.out.println("============================");
 
@@ -139,30 +141,97 @@ public class Controller {
 		case 1:
 			//View Balance
 			//LOGGER.info(bankService.getAccountBalanceByLoginName(nm));
+			
+			double accountBalance = bankService.getCombinedAccountBalanceByLoginName(logNme);
+			
 			System.out.println();
 			System.out.println("|-----------------------|");
-			System.out.println("Your account balance is: " + bankService.getAccountBalanceByLoginName(nm));
+			System.out.println("Your combined account balance is: " + accountBalance);
 			System.out.println("|-----------------------|");
 			System.out.println();
 			System.out.println("Please select another menu choice");
 			System.out.println();
+			
+			//Back to validatedMenu
 			validatedMenu();
 			break;
 		case 2:
+			//Get an itemized balance (by account)
+			//> Get a list of accounts
+			long accountNumber = getAccountNumber();
+			System.out.println("You Chose Acct#: " + accountNumber);
+			
+			//>> Display balance of selected account
+			accountBalance = bankService.getSingleAccountBalanceByLoginNameAndAccountNumber(logNme, accountNumber);			
+			System.out.println("The balance on that account is: " + accountBalance);
+			
+			// Back to validatedMenu
+			validatedMenu();
+			break;
+		
+		case 3: 
 			//Withdraw Money
 			//> Get a list of accounts
-			getAccountNumber();
-
-			//> Choose which account to deposit to
-			//getSingleAccountBalanceByLoginNameAndAccountNumber(nm, accountNumber)
+			//>> Choose which account to withdraw from
+			accountNumber = getAccountNumber();
+			System.out.println("You Chose Acct#: " + accountNumber);
+			
+			//>> Display balance of selected account
+			accountBalance = bankService.getSingleAccountBalanceByLoginNameAndAccountNumber(logNme, accountNumber);			
+			System.out.println("The balance on that account is: " + accountBalance);
+			
+			System.out.println();
+			System.out.print("Enter the amount to withdraw (in (D.CC) format): ");
+			double withdrawAmt = scanner.nextDouble();
+			
+			//The highly scientific withdrawal math:
+			accountBalance -= withdrawAmt;
+			//>>>Display updated balance of selected account
+			System.out.println("The new balance on that account is: " + accountBalance);
+			
+			//>>>Send the updated amount back to the database for persistence
+			bankService.setNewAccountBalance(accountBalance, accountNumber);
+			
+			// Back to validatedMenu
+			validatedMenu();
 			break;
-		case 3:
+		
+		case 4:
 			//Deposit Money
 			//> Get a list of accounts
 			//> Choose which account to deposit to
+		
+			accountNumber = getAccountNumber();
+			System.out.println("You Chose Acct#: " + accountNumber);
+			
+			//>> Display balance of selected account
+			accountBalance = bankService.getSingleAccountBalanceByLoginNameAndAccountNumber(logNme, accountNumber);			
+			System.out.println("The balance on that account is: " + accountBalance);
+			
+			System.out.println();
+			System.out.print("Enter the amount to deposit (in (D.CC) format): ");
+			double depositAmt = scanner.nextDouble();
+			
+			//The highly scientific deposit math:
+			accountBalance += depositAmt;
+			//>>>Display updated balance of selected account
+			System.out.println("The new balance on that account is: " + accountBalance);
+			
+			//>>>Send the updated amount back to the database for persistence
+			bankService.setNewAccountBalance(accountBalance, accountNumber);
+			
+			//Back to validatedMenu
+			validatedMenu();
 			break;
-		case 4:
-			System.out.println("Quit selected. Goodbye!");
+		case 5:
+			System.out.println();
+			System.out.println("Logout selected.......");
+			try {
+				TimeUnit.SECONDS.sleep(2);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			System.out.println("Goodbye!");
 			System.exit(0);
 			break;
 		default:
@@ -172,8 +241,6 @@ public class Controller {
 			System.out.println();
 			validatedMenu();
 		}
-
-		scanner.close();
 
 	}
 	
@@ -188,32 +255,40 @@ public class Controller {
 
 		System.out.println();
 		System.out.println("Your available accounts are: "); //+ bankService.getAllAccountNumbers(getLoginName()));
-
+		System.out.println();
 
 		Set<Long> accNum = bankService.getAllAccountNumbers(getLoginName());
-		LOGGER.info(accNum);
+		//LOGGER.info(accNum);
 		Set<String> accType = bankService.getAllAccountTypes(getLoginName());	
-		LOGGER.info(accType);
+		//LOGGER.info(accType);
 
 		Iterator<Long> it1 = accNum.iterator();
 		Iterator<String> it2 = accType.iterator();
+		
 
+		int numOfAccounts = 0;
 		while(it1.hasNext() && it2.hasNext()) {
-			accountHolder.put(it1.next().toString(),it2.next().toString());
+			
+			String str_accNum = it1.next().toString();
+			String str_accType = it2.next().toString();
+			accountHolder.put(str_accNum, str_accType);
+					
+			numOfAccounts++;
+			
+			System.out.println("Acct #: " + str_accNum + " -- " + str_accType);
 		}
-
-
-		System.out.println(accountHolder);
-
-
-
-		System.out.print("Please make an account selection: ");
-		//int option = scanner.nextInt();
-
-
-
-		//scanner.close();
-		return accountNumber;
+		
+		System.out.println();
+		System.out.print("Please select one of the " + numOfAccounts + " options above: ");
+		
+		String option = scanner.next();
+		
+		if(accountHolder.containsKey(option)){
+			return Long.parseLong(option);
+		}
+			
+		scanner.close();
+		return 0L;
 	}
 
 

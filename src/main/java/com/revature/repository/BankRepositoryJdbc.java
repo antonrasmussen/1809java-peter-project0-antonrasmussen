@@ -47,6 +47,32 @@ public class BankRepositoryJdbc implements BankRepository {
 
 		return false;
 	}
+	
+	@Override
+	public boolean updateBalance(double accountBalance, Long accountNumber) {
+		
+		
+		try(Connection connection = ConnectionUtil.getConnection()){
+			int parameterIndex = 0;
+
+			String sql = "UPDATE ACCOUNT SET A_ACCOUNT_BALANCE = ? WHERE A_ACCOUNT_NUMBER = ?";
+
+			PreparedStatement statement = connection.prepareStatement(sql);
+
+			statement.setDouble(++parameterIndex, accountBalance);
+			statement.setLong(++parameterIndex, accountNumber);
+
+			//returns int num of rows
+			if(statement.executeUpdate() > 0) {
+				return true;
+			}
+		} catch (SQLException e) {
+
+			LOGGER.error("Couldn't update balance", e);
+		}
+		return false;
+		
+	}
 
 
 	@Override
@@ -398,9 +424,9 @@ public class BankRepositoryJdbc implements BankRepository {
 		//LOGGER.info(new BankRepositoryJdbc().findByLoginName("anton"));
 		//LOGGER.info(new BankRepositoryJdbc().findBalanceByCustomerId(1L));
 		//LOGGER.info(new BankRepositoryJdbc().findTotalBalanceByLoginName("anton"));
-		LOGGER.info(new BankRepositoryJdbc().findAccountNumbersByLoginName("testlogin2")); // sorted
+		//LOGGER.info(new BankRepositoryJdbc().findAccountNumbersByLoginName("testlogin2")); // sorted
 		//LOGGER.info(new BankRepositoryJdbc().findSingleBalanceByLoginNameAndAccountNumber("anton", 123456L)); // Call within Withdraw/Deposit Functions
-
+		//LOGGER.info(new BankRepositoryJdbc().updateBalance(1000.00, 123456L));
 
 
 	}

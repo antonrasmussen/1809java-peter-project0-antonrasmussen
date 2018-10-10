@@ -104,6 +104,8 @@ public interface BankRepository {
 	 */
 	boolean isValidLoginName(String loginName);
 	
+	boolean updateBalance(double accountBalance, Long accountNumber);
+	
 	
 
 }

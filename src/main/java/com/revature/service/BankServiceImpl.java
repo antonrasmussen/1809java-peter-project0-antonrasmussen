@@ -96,7 +96,7 @@ public class BankServiceImpl implements BankService {
 		return accountBalance;
 	}
 	
-	public double getAccountBalanceByLoginName(String loginName) {
+	public double getCombinedAccountBalanceByLoginName(String loginName) {
 		//LOGGER.info("In getAccountBalanceByLogin");
 		double accountBalance = repository.findTotalBalanceByLoginName(loginName);
 		
@@ -117,6 +117,9 @@ public class BankServiceImpl implements BankService {
 		return repository.findAccountTypesByLoginName(loginName);
 	}
 	
+	public void setNewAccountBalance(double accountBalance, Long accountNumber) {
+		repository.updateBalance(accountBalance, accountNumber);
+	}
 	
 	public static void main(String[] args) {
 		//LOGGER.info(new BankRepositoryJdbc().findAllAccounts());
