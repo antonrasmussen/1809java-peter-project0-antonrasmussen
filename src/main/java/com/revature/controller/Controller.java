@@ -1,20 +1,14 @@
 package com.revature.controller;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 
-import com.revature.model.Account;
 import com.revature.model.Customer;
-import com.revature.repository.BankRepository;
-import com.revature.repository.BankRepositoryJdbc;
-import com.revature.service.BankService;
 import com.revature.service.BankServiceImpl;
 
 /**
@@ -25,20 +19,17 @@ import com.revature.service.BankServiceImpl;
  * The view is only used to display things on request of the
  * controller. And also when the model changes.
  * 
- * In this project, given its console based "view" nature, I have
- * opted to put the view functionality within the Controller class.
+ * NOTE: In this project, given its `console` based "view" nature, I have
+ * opted to put the `view` functionality within the Controller class.
  */
 
 public class Controller {
 
-	//TODO: Validate user input by searching against database
-
 	public static final Logger LOGGER = Logger.getLogger(Controller.class);
 
+	
 	private BankServiceImpl bankService = new BankServiceImpl();
-
-	public Customer customer = new Customer();
-	public Account account = new Account();
+	private Customer customer = new Customer();
 
 	Scanner	scanner = new Scanner(System.in);
 
@@ -60,23 +51,29 @@ public class Controller {
 		System.out.println("|                          |");
 		System.out.println("| 1. Login                 |");
 		System.out.println("| 2. Exit                  |");
+		System.out.println("|                          |");
 		System.out.println("============================");
 
-
+		System.out.println();
 		System.out.print("Select option: ");
+		
 
 		int option = scanner.nextInt();
 
 		switch (option) {
 		case 1:
 			//Login
+			System.out.println();
 			login();
 			break;
 		case 2:
+			//Exit
+			System.out.println();
 			System.out.println("Exit selected. Goodbye!");
 			System.exit(0);
 			break;
 		default:
+			//TODO: Validate input
 			System.out.println();
 			System.out.println("Invalid selection");
 			System.out.println("Please try again");
@@ -99,14 +96,15 @@ public class Controller {
 
 
 	public void checkValidSession() {
-		System.out.println("login name is:: " + getLoginName());
-
+		System.out.println();
+		System.out.println("Validating login name......... ");
+		System.out.println();
 		if(!bankService.bankHasLoginName(getLoginName())) {
 			System.out.println("Not a valid login name or password; please try again");
+			System.out.println();
 			login();
 		}
 		else {
-			//LOGGER.info("In else of inValidSession");
 			validatedMenu();
 		}
 
@@ -131,7 +129,7 @@ public class Controller {
 
 		//LOGGER.info(bankService.getAccountBalance(getLoginId()));
 
-
+		System.out.println();
 		System.out.print("Select option: ");
 
 		int option = scanner.nextInt();
@@ -139,15 +137,13 @@ public class Controller {
 
 		switch (option) {
 		case 1:
-			//View Balance
-			//LOGGER.info(bankService.getAccountBalanceByLoginName(nm));
-			
-			double accountBalance = bankService.getCombinedAccountBalanceByLoginName(logNme);
+			//View Balance			
+			double accountBalance = bankService.getCombinedAccountBalance(logNme);
 			
 			System.out.println();
-			System.out.println("|-----------------------|");
-			System.out.println("Your combined account balance is: " + accountBalance);
-			System.out.println("|-----------------------|");
+			System.out.println("|============================================|");
+			System.out.println("  Your combined account balance is: " + accountBalance);
+			System.out.println("|============================================|");
 			System.out.println();
 			System.out.println("Please select another menu choice");
 			System.out.println();
@@ -162,7 +158,7 @@ public class Controller {
 			System.out.println("You Chose Acct#: " + accountNumber);
 			
 			//>> Display balance of selected account
-			accountBalance = bankService.getSingleAccountBalanceByLoginNameAndAccountNumber(logNme, accountNumber);			
+			accountBalance = bankService.getSingleAccountBalance(logNme, accountNumber);			
 			System.out.println("The balance on that account is: " + accountBalance);
 			
 			// Back to validatedMenu
@@ -177,7 +173,7 @@ public class Controller {
 			System.out.println("You Chose Acct#: " + accountNumber);
 			
 			//>> Display balance of selected account
-			accountBalance = bankService.getSingleAccountBalanceByLoginNameAndAccountNumber(logNme, accountNumber);			
+			accountBalance = bankService.getSingleAccountBalance(logNme, accountNumber);			
 			System.out.println("The balance on that account is: " + accountBalance);
 			
 			System.out.println();
@@ -205,7 +201,7 @@ public class Controller {
 			System.out.println("You Chose Acct#: " + accountNumber);
 			
 			//>> Display balance of selected account
-			accountBalance = bankService.getSingleAccountBalanceByLoginNameAndAccountNumber(logNme, accountNumber);			
+			accountBalance = bankService.getSingleAccountBalance(logNme, accountNumber);			
 			System.out.println("The balance on that account is: " + accountBalance);
 			
 			System.out.println();
@@ -226,13 +222,9 @@ public class Controller {
 		case 5:
 			System.out.println();
 			System.out.println("Logout selected.......");
-			try {
-				TimeUnit.SECONDS.sleep(2);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
 			System.out.println("Goodbye!");
-			System.exit(0);
+			unvalidatedMenu();
+			
 			break;
 		default:
 			System.out.println();
@@ -244,17 +236,23 @@ public class Controller {
 
 	}
 	
+	
+	/**
+	 * Helper function for retrieving an accountNumber
+	 * 
+	 * @return accountNumber
+	 */
+	
 	//TODO: Create an implementation of this that allows 
 	//each customer to have more than one account type!
 	public Long getAccountNumber() {
 
-		Long accountNumber = 0L;
 
 		Map<String, String> accountHolder = new LinkedHashMap<>();
 
 
 		System.out.println();
-		System.out.println("Your available accounts are: "); //+ bankService.getAllAccountNumbers(getLoginName()));
+		System.out.println("Your available accounts are: ");
 		System.out.println();
 
 		Set<Long> accNum = bankService.getAllAccountNumbers(getLoginName());

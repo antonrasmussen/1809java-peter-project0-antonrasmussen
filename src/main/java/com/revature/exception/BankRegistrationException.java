@@ -11,6 +11,5 @@ public class BankRegistrationException extends RuntimeException {
 		super(message);
 	}
 	
-	
 
 }

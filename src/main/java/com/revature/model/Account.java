@@ -2,34 +2,38 @@ package com.revature.model;
 
 import java.io.Serializable;
 
+import org.apache.log4j.Logger;
+
 public class Account implements Comparable<Account>, Serializable {
+	
+	private static Logger LOGGER = Logger.getLogger(Account.class);
 
 	/**
 	 * Java 1.x Compatibility
 	 */
 	private static final long serialVersionUID = -3706430178014220784L;
 
-	/*
+	/**
 	 * A_ACCOUNT_NUMBER (PK) - (Must be unique + not nullable)
 	 */
 	private Long accountNumber;
 
-	/*
+	/**
 	 * A_ACCOUNT_TYPE - (Not null) - 'CHECKING', 'SAVINGS', 'CUSTODIAL', 'IRA'
 	 */	
 	private String accountType;
 
-	/*
+	/**
 	 * A_ACCOUNT_STATUS - (Can be null) - 'ACTIVE', 'INACTIVE'
 	 */
 	private String accountStatus;
 
-	/*
+	/**
 	 * A_ACCOUNT_BALANCE - (Not null)
 	 */
 	private double accountBalance;
 	
-	/*
+	/**
 	 * 	ACCOUNT_HASH
 	 */
 	private String accountHash;

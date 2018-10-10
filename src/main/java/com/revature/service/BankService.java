@@ -8,15 +8,10 @@ import com.revature.model.Customer;
 /**
  * The BankService class provides functionality for authentication, 
  * validation, and registration.
- * 
- * 
- * @author Anton Rasmussen
  *
  */
 
 public interface BankService {
-	
-	// Account Stuff
 	
 	/**
 	 * Register a new account
@@ -33,23 +28,6 @@ public interface BankService {
 	 */
 	Set<Account> getAllAccounts();
 	
-	/**
-	 * Get a set of accounts by account type
-	 * (Checking, Savings, or Custodial)
-	 * @param accountType
-	 * @return a set of accounts based on type
-	 */
-	Set<Account> getAccountsByType(String accountType);
-	
-	/**
-	 * Get a single account by account number
-	 * 
-	 * @param accountNumber
-	 * @return a single account
-	 */
-	Account getAccount(Long accountNumber);
-	
-	// Customer Stuff
 	
 	/**
 	 * Register a new customer
@@ -65,32 +43,14 @@ public interface BankService {
 	 * @return all customers
 	 */
 	Set<Customer> getAllCustomers();
-	
-	/**
-	 * Get a set of customers with all the same account type
-	 * 
-	 * @param accountType
-	 * @return customers by account type
-	 */
-	Set<Customer> getCustomersByAccountType(Account accountType);
-	
-	/**
-	 * Get a set of customers with all the same account status
-	 * 
-	 * @param accountStatus
-	 * @return customers by account status
-	 */
-	Set<Customer> getCustomersByAccountStatus(Account accountStatus);
-	
-	
+
 	/**
 	 * Check to see if loginName is in database
 	 * @param loginName
 	 * @return true or false
 	 */
 	boolean bankHasLoginName(String loginName);
-	
-	
+
 	/**
 	 * Get the account balance based on customerId; this
 	 * will be the sum of balances across all accounts for one customer
@@ -103,11 +63,44 @@ public interface BankService {
 	/**
 	 * Get the account balance based on loginName; this
 	 * will be the sum of balances across all accounts for one loginName
+	 * 
 	 * @param loginName
 	 * @return double accountBalance (total across all accounts)
 	 */
-	double getCombinedAccountBalanceByLoginName(String loginName);
+	double getCombinedAccountBalance(String loginName);
 	
+	/**
+	 * Get the account balance based on login name and account number; 
+	 * this will be an itemized balance for one account.
+	 * 
+	 * @param loginName
+	 * @param accountNumber
+	 * @return accountBalance
+	 */
+	double getSingleAccountBalance(String loginName, Long accountNumber);
+	
+	/**
+	 * Data structure for storing all account numbers
+	 * 
+	 * @param loginName
+	 * @return set of account numbers
+	 */
+	Set<Long> getAllAccountNumbers(String loginName);
+	
+	/**
+	 * Data structure for storing all account types
+	 * 
+	 * @param loginName
+	 * @return set of account types
+	 */
+	Set<String> getAllAccountTypes(String loginName);
+	
+	/**
+	 * Set a new balance. Used after a withdrawal or a deposit.
+	 * 
+	 * @param accountBalance
+	 * @param accountNumber
+	 */
 	void setNewAccountBalance(double accountBalance, Long accountNumber);
 
 }

@@ -2,7 +2,12 @@ package com.revature.model;
 
 import java.io.Serializable;
 
+import org.apache.log4j.Logger;
+
+
 public class Customer implements Comparable<Customer>, Serializable {
+	
+	private static Logger LOGGER = Logger.getLogger(Customer.class);
 
 	/**
 	 * Java 1.x Compatibility

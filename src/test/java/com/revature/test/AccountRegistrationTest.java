@@ -2,6 +2,7 @@ package com.revature.test;
 
 import static org.junit.Assert.assertTrue;
 
+import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,11 +10,13 @@ import org.junit.Test;
 import com.revature.exception.BankRegistrationException;
 import com.revature.model.Account;
 import com.revature.model.Customer;
+import com.revature.repository.BankRepositoryJdbc;
 import com.revature.service.BankService;
 import com.revature.service.BankServiceImpl;
 
 public class AccountRegistrationTest {
 
+	private static Logger LOGGER = Logger.getLogger(AccountRegistrationTest.class);
 
 
 	private BankService bankService;

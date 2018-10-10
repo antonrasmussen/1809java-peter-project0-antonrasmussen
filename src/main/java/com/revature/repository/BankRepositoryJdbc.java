@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -16,7 +15,7 @@ import com.revature.util.ConnectionUtil;
 
 public class BankRepositoryJdbc implements BankRepository {
 
-	private static Logger LOGGER = Logger.getLogger(ConnectionUtil.class);
+	private static Logger LOGGER = Logger.getLogger(BankRepositoryJdbc.class);
 
 
 	// Account methods
@@ -50,8 +49,6 @@ public class BankRepositoryJdbc implements BankRepository {
 	
 	@Override
 	public boolean updateBalance(double accountBalance, Long accountNumber) {
-		
-		
 		try(Connection connection = ConnectionUtil.getConnection()){
 			int parameterIndex = 0;
 
@@ -121,11 +118,6 @@ public class BankRepositoryJdbc implements BankRepository {
 		
 	}
 
-	@Override
-	public Set<Account> findByAccountType(String accountType) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	//Customer methods
 
@@ -192,13 +184,6 @@ public class BankRepositoryJdbc implements BankRepository {
 	}
 
 
-
-	//TODO: View balance (by account): 
-	//> SELECT A_ACCOUNT_BALANCE FROM ACCOUNT WHERE A_ACCOUNT_NUMBER = [A_ACCOUNT_NUMBER];
-	// . . .
-
-	//View balance (by customer)
-	//> SELECT SUM (A_ACCOUNT_BALANCE) FROM ACCOUNT WHERE C_ID = [C_ID];
 	@Override
 	public double findBalanceByCustomerId(long id) {
 		try(Connection connection = ConnectionUtil.getConnection()) {
@@ -288,7 +273,8 @@ public class BankRepositoryJdbc implements BankRepository {
 		}
 		return 0;
 	}
-
+	
+	@Override
 	public Set<Long> findAccountNumbersByLoginName(String loginName) {
 		try(Connection connection = ConnectionUtil.getConnection()) {
 			String sql = "SELECT ACCOUNT.A_ACCOUNT_NUMBER "
@@ -321,7 +307,8 @@ public class BankRepositoryJdbc implements BankRepository {
 		}
 		return null;
 	}
-
+	
+	@Override
 	public Set<String> findAccountTypesByLoginName(String loginName) {
 		try(Connection connection = ConnectionUtil.getConnection()) {
 			String sql = "SELECT ACCOUNT.A_ACCOUNT_TYPE "
@@ -354,21 +341,8 @@ public class BankRepositoryJdbc implements BankRepository {
 		}
 		return null;
 	}
-
-	//Deposit money: 
-	//> UPDATE ACCOUNT SET A_ACCOUNT_BALANCE = [Money to Deposit] where C_ID = [C_ID] and A_ACCOUNT_NUMBER = [A_ACCOUNT_NUMBER];
-	public double depositToAccount(Account accountNumber) {
-
-		return 0;
-	}
-
-
+ 
 	@Override
-	public Set<Customer> findByName(String firstName, String lastName) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public Set<Customer> findByLoginName(String loginName) {
 		try(Connection connection = ConnectionUtil.getConnection()) {
 			String sql = "SELECT C_LOGIN_NAME FROM CUSTOMER";
@@ -388,7 +362,6 @@ public class BankRepositoryJdbc implements BankRepository {
 				return null;
 			}
 
-
 			return customer;
 		} catch (SQLException e) {
 
@@ -399,17 +372,15 @@ public class BankRepositoryJdbc implements BankRepository {
 
 	@Override
 	public boolean isValidLoginName(String loginName) {
-		//LOGGER.info("In isValidLoginName");
+		
 		boolean truthFlag = false;
 		Set<Customer> customer = new BankRepositoryJdbc().findByLoginName(loginName);
 		for(Customer cust: customer) {
 
 			if(cust.getLoginName().equals(loginName)) {
-				//LOGGER.info("VALID");
 				return true;
 			}
 			else {
-				//LOGGER.info("INVALID");
 				truthFlag = false;
 			}
 		}
@@ -419,14 +390,14 @@ public class BankRepositoryJdbc implements BankRepository {
 
 
 	public static void main(String[] args) {
-		//LOGGER.info(new BankRepositoryJdbc().findAllAccounts());
-		//LOGGER.info(new BankRepositoryJdbc().findAllCustomers());
-		//LOGGER.info(new BankRepositoryJdbc().findByLoginName("anton"));
-		//LOGGER.info(new BankRepositoryJdbc().findBalanceByCustomerId(1L));
-		//LOGGER.info(new BankRepositoryJdbc().findTotalBalanceByLoginName("anton"));
-		//LOGGER.info(new BankRepositoryJdbc().findAccountNumbersByLoginName("testlogin2")); // sorted
-		//LOGGER.info(new BankRepositoryJdbc().findSingleBalanceByLoginNameAndAccountNumber("anton", 123456L)); // Call within Withdraw/Deposit Functions
-		//LOGGER.info(new BankRepositoryJdbc().updateBalance(1000.00, 123456L));
+		LOGGER.info(new BankRepositoryJdbc().findAllAccounts());
+		LOGGER.info(new BankRepositoryJdbc().findAllCustomers());
+		LOGGER.info(new BankRepositoryJdbc().findByLoginName("anton"));
+		LOGGER.info(new BankRepositoryJdbc().findBalanceByCustomerId(1L));
+		LOGGER.info(new BankRepositoryJdbc().findTotalBalanceByLoginName("anton"));
+		LOGGER.info(new BankRepositoryJdbc().findAccountNumbersByLoginName("anton")); // sorted
+		LOGGER.info(new BankRepositoryJdbc().findSingleBalanceByLoginNameAndAccountNumber("anton", 123456L));
+		//LOGGER.info(new BankRepositoryJdbc().updateBalance(1000.00, 123456L)); //>Updates 
 
 
 	}
