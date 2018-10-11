@@ -1,0 +1,4 @@
+PL-SQL Trigger to create account with new user
+Password hashing
+transaction log
+check for balance exceptions
